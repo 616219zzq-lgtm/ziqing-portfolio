@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // Reset homepage reloads before React mounts or the browser follows a fragment.
+      // Fresh section links and history navigation retain their normal behavior.
+      const base = '/ziqing-portfolio';
+      const params = new URLSearchParams(location.search);
+      const route = params.get('route');
+      if (route) {
+        history.replaceState({}, '', base + route + location.hash);
+      } else if ((location.pathname === '/' || location.pathname === base || location.pathname === base + '/') && performance.getEntriesByType('navigation')[0]?.type === 'reload') {
+        history.scrollRestoration = 'manual';
+        history.replaceState({ ...history.state, scrollY: 0 }, '', location.pathname + location.search);
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      }
+    </script>
+    <meta name="theme-color" content="#f5f5f3" />
+    <meta name="description" content="张紫晴的体验设计与 UI 设计作品集。江南大学设计研究生，关注用户行为、阅读社区、地图社交与有趣的互动。" />
+    <link rel="preload" href="%BASE_URL%fonts/plus-jakarta-sans-latin-variable.woff2" as="font" type="font/woff2" crossorigin />
+    <title>张紫晴 — 体验设计 / UI 设计</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

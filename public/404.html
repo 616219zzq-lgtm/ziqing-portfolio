@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script>
+      const base = '/ziqing-portfolio';
+      const path = location.pathname;
+      const route = path.startsWith(base + '/') ? path.slice(base.length) : '/';
+      location.replace(base + '/?route=' + encodeURIComponent(route) + location.search.replace(/^\?/, '&') + location.hash);
+    </script>
+  </head>
+  <body></body>
+</html>

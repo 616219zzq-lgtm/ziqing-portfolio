@@ -1,0 +1,22 @@
+{
+  "name": "zhang-ziqing-portfolio",
+  "private": false,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "build:pages": "vite build --base=/ziqing-portfolio/",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "@hugeicons/core-free-icons": "^4.4.0",
+    "@hugeicons/react": "^1.1.10",
+    "@vitejs/plugin-react": "latest",
+    "gsap": "^3.15.1",
+    "lucide-react": "^0.468.0",
+    "react": "latest",
+    "react-dom": "latest",
+    "vite": "latest"
+  }
+}

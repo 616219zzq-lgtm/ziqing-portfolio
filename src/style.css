@@ -56,6 +56,21 @@ p { line-height: 1.9; }
 .site-header nav a > span { color: #919196; font: 9px var(--mono); align-self: flex-start; margin-top: 11px; }
 .site-header .nav-resume { border: 1px solid #d8d8dc; padding: 0 17px; border-radius: 30px; margin-left: 8px; }
 .menu-button { display: none; }
+.header-actions { display: flex; align-items: center; gap: 12px; }
+.music-control { position: relative; }
+.music-toggle { display: flex; align-items: center; justify-content: center; gap: 7px; width: 84px; min-height: 44px; padding: 0; color: inherit; background: none; border: 0; cursor: pointer; font: 11px var(--mono); letter-spacing: 0; }
+.music-toggle:hover { opacity: .72; }
+.music-toggle:focus-visible { outline: 2px solid currentColor; outline-offset: -3px; }
+.music-bars { display: flex; align-items: center; gap: 2px; height: 16px; }
+.music-bars i { display: block; width: 2px; height: 6px; border-radius: 2px; background: currentColor; }
+.music-bars i:nth-child(2) { height: 14px; }
+.music-bars i:nth-child(3) { height: 9px; }
+.music-toggle[aria-pressed="true"] .music-bars i { animation: music-beat .8s ease-in-out infinite alternate; }
+.music-toggle[aria-pressed="true"] .music-bars i:nth-child(2) { animation-delay: -.26s; }
+.music-toggle[aria-pressed="true"] .music-bars i:nth-child(3) { animation-delay: -.54s; }
+.music-error { position: absolute; top: 100%; right: 0; padding: 5px 8px; background: #fff; color: #222; border: 1px solid #ddd; font-size: 12px; white-space: nowrap; }
+@keyframes music-beat { from { transform: scaleY(.45); } to { transform: scaleY(1.15); } }
+@media (prefers-reduced-motion: reduce) { .music-toggle[aria-pressed="true"] .music-bars i { animation: none; } }
 .name-card { border-radius: 11px; }
 .name-card { width: 100%; height: 100%; overflow: hidden; border-radius: 24px; position: relative; background: #e6ddef; isolation: isolate; text-align: left; }
 .personal-art { width: 100%; height: 100%; position: absolute; inset: 0; overflow: hidden; background: radial-gradient(ellipse at 15% 5%, #f8e0cb, transparent 60%), radial-gradient(ellipse at 100% 55%, #bca8df, transparent 70%), #d7cae5; }
@@ -236,6 +251,8 @@ main:focus { outline: none; }
 .case-chapter { padding: 50px 0 40px; border-top: 1px solid var(--line); scroll-margin-top: 40px; }
 .case-chapter blockquote { border-left: 2px solid #9b9ba2; padding: 2px 0 2px 23px; color: #5c5c67; font-size: 18px; line-height: 1.9; font-weight: 300; margin: 30px 0 5px; }
 .chapter-media { height: 290px; border-radius: 12px; overflow: hidden; margin-top: 30px; }
+.case-xiaohuasheng :is(.case-banner, .chapter-media) { height: auto; border-radius: 0; }
+.case-image { display: block; width: 100%; height: auto; }
 .next-case { padding: 55px 0 70px; border-top: 1px solid var(--line); }
 .next-case > a { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
 .next-case > a > svg { color: #b6b6bb; transition: transform .3s; }

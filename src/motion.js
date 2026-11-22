@@ -80,7 +80,7 @@ export function usePortfolioMotion(path) {
       // Local image movement only: native scrolling and anchor navigation remain intact.
       document.querySelectorAll('.exploration-image,.video-placeholder,.motion-showcase-reel,.case-banner,.chapter-media').forEach(frame => {
         const content = frame.querySelector(':scope > .project-placeholder,:scope > img');
-        if (!content) return;
+        if (!content || content.matches('.case-image')) return;
         gsap.fromTo(content, { yPercent: mobile ? -2 : -4, scale: 1.1 }, {
           yPercent: mobile ? 2 : 4, scale: 1.04, ease: 'none',
           scrollTrigger: { trigger: frame, start: 'top bottom', end: 'bottom top', scrub: .45 },

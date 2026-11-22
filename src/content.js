@@ -16,7 +16,17 @@ export const explorationCovers = {
   more: asset('assets/projects/more-explorations-cover-web.webp'),
 };
 export const media = {
-  xiaohuasheng: { cover: asset('assets/projects/xiaohuasheng-cover-web.webp'), chapters: {} },
+  xiaohuasheng: {
+    cover: asset('assets/projects/xiaohuasheng-cover-web.webp'),
+    caseBanner: asset('assets/xiaohuasheng/case-overview.webp'),
+    chapters: [
+      asset('assets/xiaohuasheng/ai-workflow.webp'),
+      asset('assets/xiaohuasheng/figma-design.webp'),
+      asset('assets/xiaohuasheng/community-needs.webp'),
+      asset('assets/xiaohuasheng/book-exchange.webp'),
+      asset('assets/xiaohuasheng/design-reflection.webp'),
+    ],
+  },
   flarewild: { cover: asset('assets/projects/flarewild-cover-web.webp'), video: null, poster: null, chapters: {} },
 };
 export const profile = {
@@ -26,17 +36,16 @@ export const profile = {
 };
 export const projects = [
   { id: 'xiaohuasheng', number: '01', name: '小花生', english: 'READING, RECONNECTED.', category: '亲子阅读 · 社区体验', time: '2025.06 — 2026.03', company: '上海慧力信息技术有限公司', role: 'UI/UX 设计实习',
-    title: '让阅读之后的连接，继续发生。', subtitle: '从社群中的真实需求，到书圈转转与个性化阅读体验。',
+    title: '小花生亲子阅读体验升级', subtitle: '从用户调研、AI 辅助设计，到主动提案并推动「书圈转转」落地。',
     summary: '从家长的闲置童书需求出发，提出并协同推进「书圈转转」，连接原有阅读行为与同城流转。', tags: ['用户洞察', '个性化体验', '社区设计'], color: '#f2c9ac',
-    contribution: '整理社群反馈并提出书圈转转需求，阐述用户场景与交互方案，与产品和开发讨论业务规则、技术可行性及定位隐私。',
-    status: '书圈转转协同落地；行为策略与 AI 推荐在此作为设计探索呈现。',
+    contribution: '我参与了从用户调研、需求分析到设计落地的完整流程。我用 AI 辅助整理反馈、探索方案和验证原型，并在 Figma 中完成交互设计、视觉设计和组件库搭建。',
+    status: '从社区反馈中发现闲置童书流转需求，主动提案并推动「书圈转转」落地。',
     sections: [
-      { label: '01 / THE OPPORTUNITY', title: '需求，已经在评论区发生。', body: '整理社群反馈时，一位妈妈提到：读完的绘本堆在家里，扔掉可惜，放到交易平台又需要拍照、写介绍、反复沟通。她更想找到附近有换书需求的家长。评论区里，不少家长已经开始自行对接。', insight: '用户愿意彼此连接，但路径分散、发布成本高，缺少一个顺手的入口。' },
-      { label: '02 / THE CONNECTION', title: '让换书，顺着阅读发生。', body: '我将反馈整理成需求提案，提出「书圈转转」：依托 LBS 进行同城匹配，支持从打卡书架一键导入书籍信息，减少重复录入。方案承接读完书之后的行为，让阅读与流转形成连接。', type: 'flow' },
-      { label: '03 / BEHAVIOR & INTENT', title: '同一个入口，不同的下一步。', body: '行为可以成为判断意图的线索。我探索通过内容推荐与底部面板的变化，帮助找书、换书、发布和探索中的用户找到下一步。这是设计策略，不将其描述为已验证的算法能力。', type: 'strategy' },
-      { label: '04 / PERSONALIZATION', title: '不只看年龄，也理解使用阶段。', body: '孩子年龄相同，家庭的需求也不一定相同。新手需要降低选书成本，习惯养成期需要易执行的陪读建议，深度参与者则可能希望流转闲置童书。AI 推荐界面据此探索不同的内容组织方式。', type: 'stages' },
-      { label: '05 / WORKING TOGETHER', title: '把隐私放进设计决策。', body: '在可行性讨论中，我说明用户场景与交互，产品补充业务规则，开发共同评估权限与技术条件。定位权限、手动关闭定位、仅展示大致距离、不暴露精确地址，都进入了同城匹配的讨论。', insight: '连接附近的人，不等于暴露精确位置。' },
-      { label: '06 / REFLECTION', title: '从发现需求，到共同推进。', body: '这段经历让我更重视设计开始之前的观察，也更重视方案之后的协作。书圈转转从真实反馈出发并协同推进落地；行为策略和推荐逻辑保留为设计探索。没有完整验证依据的业务数字，不作为这个案例的结果。' },
+      { label: '01 / AI WORKFLOW', title: '用 AI 加快方案探索与验证', body: '我用 AI 将多渠道的家长反馈按主题归类，并结合用户场景和业务目标筛选设计方向。在原型阶段，我用生成式 AI 探索多套方案，再用 Codex 搭建可交互的 Demo，提前检查关键流程、验证交互细节。' },
+      { label: '02 / FIGMA DESIGN', title: '在 Figma 中完成交互、视觉与组件库', body: '我将选定的方案细化为交互流程和高保真界面，并把重复使用的界面元素整理为可复用组件。组件库帮助不同页面保持一致，也方便后续迭代和开发交接。' },
+      { label: '03 / USER INSIGHT', title: '在社区发现闲置童书的换书需求', body: '一位家长在社区提到，孩子读完的绘本堆在家里，放到交易平台又要拍照、写介绍、反复沟通。评论区里，已经有家长开始自行找人换书。我把这些反馈整理成提案，希望让有换书需求的家长更容易在小花生里找到彼此。' },
+      { label: '04 / DELIVERY', title: '主动提案并推动「书圈转转」落地', body: '我提出让家长从打卡书架直接导入书籍信息，减少重复填写，并通过同城匹配寻找附近的换书对象。我与产品和开发一起讨论发布规则、定位权限和距离展示，在方便家长找到彼此的同时保护位置隐私，最终推动模块落地。' },
+      { label: '05 / REFLECTION', title: '从用户反馈到跨团队协作', body: '这次经历让我学会从用户已经在做的事里发现需求。评论区里的换书行为给了我提案的依据，而与产品、开发逐项确认规则和技术限制，让我积累了把需求推进到落地的经验。' },
     ] },
   { id: 'flarewild', number: '02', name: 'FlareWild', english: 'A LITTLE SPARK. A REAL CONNECTION.', category: '地图社交 · 互动设计', time: '2025.03 — 2026.09', company: '无锡旋涡动力 Vortex Force', role: '体验设计实习',
     title: '让地图上的互动，成为聊天的开场。', subtitle: '通过地图道具与动效，连接社交破冰和品牌表达。',

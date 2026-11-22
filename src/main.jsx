@@ -68,6 +68,40 @@ function MapArt() {
   return <ProjectMedia src={media.flarewild.cover} alt="FlareWild · 项目封面"/>;
 }
 
+function BackgroundMusic() {
+  const audio = useRef(null);
+  const [playing, setPlaying] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const label = playing ? '暂停背景音乐' : '播放背景音乐';
+
+  const toggleMusic = async () => {
+    const player = audio.current;
+    if (!player.paused) {
+      player.pause();
+      return;
+    }
+    setFailed(false);
+    if (player.error) player.load();
+    player.volume = 0.28;
+    try {
+      await player.play();
+    } catch (error) {
+      if (error.name !== 'AbortError') setFailed(true);
+    }
+  };
+
+  return <div className="music-control">
+    <audio ref={audio} src={withBase('/assets/audio/bgm.mp3')} loop preload="none"
+      onPlaying={() => { setPlaying(true); setFailed(false); }} onPause={() => setPlaying(false)}
+      onError={() => { setPlaying(false); setFailed(true); }}/>
+    <button type="button" className="music-toggle" aria-label="背景音乐" aria-pressed={playing} title={label} onClick={toggleMusic}>
+      <span className="music-bars" aria-hidden="true"><i/><i/><i/></span>
+      <span aria-hidden="true">{playing ? 'PAUSE' : 'MUSIC'}</span>
+    </button>
+    {failed && <span className="music-error" role="status">音乐加载失败，请重试</span>}
+  </div>;
+}
+
 function Header({ navigate, isCase = false }) {
   const [open, setOpen] = useState(false);
   const toggle=useRef(null);
@@ -85,6 +119,8 @@ function Header({ navigate, isCase = false }) {
   };
   return <header className={'site-header '+(isCase?'case-header':'home-header')}>
     <a className="logo" href={withBase('/')} onClick={e=>{if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();setOpen(false);navigate('/');}} aria-label="张紫晴，返回首页">zq<span>✳</span></a>
+    <div className="header-actions">
+    <BackgroundMusic/>
     <button ref={toggle} className="menu-button icon-button" aria-label={open?'关闭导航':'打开导航'} aria-expanded={open} aria-controls="primary-nav" onClick={()=>setOpen(!open)}>{open?<X/>:<Menu/>}</button>
     <nav id="primary-nav" className={open?'is-open':''} aria-label="主导航">
       <a href={withBase('/#work')} onClick={e=>anchor(e,'work')}>作品<span>02</span></a>
@@ -92,6 +128,7 @@ function Header({ navigate, isCase = false }) {
       <a href={withBase('/#contact')} onClick={e=>anchor(e,'contact')}>联系<ArrowUpRight size={14}/></a>
       <a className="nav-resume" href={profile.resume} download="张紫晴-体验设计简历.pdf">下载简历<Download size={14}/></a>
     </nav>
+    </div>
   </header>;
 }
 
@@ -362,14 +399,19 @@ function Contact({ copy }) {
   return <section id="contact" className="contact-section reference-contact"><ClosingBadge/><div className="contact-copy"><MotionTitle>let’s <em>talk</em> about it.</MotionTitle><p>想了解我的项目、设计过程或工作经历？<br/>欢迎联系我。</p><div className="contact-actions"><a className="button button-white" href={`mailto:${profile.email}`}>发一封邮件<ArrowUpRight size={17}/></a><a className="button button-outline" href={profile.resume} download="张紫晴-体验设计简历.pdf">下载简历<Download size={17}/></a></div><div className="contact-details"><div><span>EMAIL</span><a href={`mailto:${profile.email}`}>{profile.email}</a><button className="copy-button" onClick={()=>copy(profile.email,'邮箱')} aria-label="复制邮箱"><Copy size={14}/></button></div><div><span>WECHAT</span><button className="wechat-copy" onClick={()=>copy(profile.wechat,'微信号')}>{profile.wechat}<Copy size={14}/></button></div><div><span>PHONE</span><a href={`tel:${profile.phone}`}>{profile.phone}</a></div></div></div><footer className="site-footer"><a className="logo" href={withBase('/#top')}>zq<span>✳</span></a><span>© {new Date().getFullYear()} 张紫晴 · MADE WITH CURIOSITY.</span><a href={withBase('/#top')}>回到顶部<ArrowUpRight size={13}/></a></footer></section>;
 }
 
+function CaseImage({ src, alt, banner = false }) {
+  return <img className="case-image" src={src} alt={alt} width={1600} height={900} loading={banner ? 'eager' : 'lazy'} decoding="async"/>;
+}
+
 function CaseSectionVisual({ projectId, index, title, type }) {
+  if (projectId==='xiaohuasheng') return <div className="chapter-media"><CaseImage src={media.xiaohuasheng.chapters[index]} alt={title+' · 设计过程'}/></div>;
   if (projectId==='flarewild' && type==='demo') return <VideoSlot/>;
   return <div className="chapter-media"><GalleryTilt><ProjectMedia src={media[projectId]?.chapters[index]} alt={title+' · 设计过程'}/></GalleryTilt></div>;
 }
 
 function CasePage({project,navigate}) {
   const other=projects.find(p=>p.id!==project.id);
-  return <main className={`case-page case-${project.id}`} id="main-content" tabIndex={-1}><div id="top"/><div className="case-intro content-shell"><a className="text-link case-back" href={withBase('/#work')} onClick={e=>{if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();navigate('/','work');}}><ArrowLeft size={16}/>返回精选项目</a><p className="eyebrow">{project.category} / {project.time}</p><h1>{project.title}</h1><p className="case-subtitle">{project.subtitle}</p><div className="case-facts"><div><span>PROJECT</span><strong>{project.name}</strong></div><div><span>ROLE</span><strong>{project.role}</strong></div><div><span>TEAM</span><strong>{project.company}</strong></div></div></div><div className="case-banner">{project.id==='xiaohuasheng'?<PeanutArt/>:<MapArt/>}</div><div className="case-body content-shell"><aside className="case-sidebar"><span className="tiny-code">IN THIS CASE</span>{project.sections.map((s,i)=><a href={`#chapter-${i}`} key={s.label}><span>0{i+1}</span>{s.title}</a>)}<a href={profile.resume} download="张紫晴-体验设计简历.pdf" className="sidebar-resume">下载简历<Download size={13}/></a></aside><div className="case-chapters"><div className="case-overview"><span className="eyebrow">MY PART IN THE STORY</span><h2>我在其中做了什么</h2><p>{project.contribution}</p><div className="status-note"><Check size={16}/><span>{project.status}</span></div></div>{project.sections.map((s,i)=><section className="case-chapter" id={`chapter-${i}`} key={s.label}><span className="eyebrow">{s.label}</span><h2>{s.title}</h2><p>{s.body}</p>{s.insight&&<blockquote>{s.insight}</blockquote>}<CaseSectionVisual projectId={project.id} index={i} title={s.title} type={s.type}/></section>)}</div></div><section className="next-case content-shell"><span className="eyebrow">KEEP EXPLORING</span><a href={withBase(casePath(other.id))} onClick={e=>{if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();navigate(casePath(other.id));}}><div><span>下一个连接</span><h2>{other.name}</h2><p>{other.title}</p></div><ArrowUpRight size={50}/></a></section><div className="case-footer content-shell"><a href={withBase('/#contact')} className="text-link" onClick={e=>{if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();navigate('/','contact');}}>聊聊设计<ArrowUpRight size={16}/></a><span>张紫晴 / EXPERIENCE & UI DESIGN</span></div></main>;
+  return <main className={`case-page case-${project.id}`} id="main-content" tabIndex={-1}><div id="top"/><div className="case-intro content-shell"><a className="text-link case-back" href={withBase('/#work')} onClick={e=>{if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();navigate('/','work');}}><ArrowLeft size={16}/>返回精选项目</a><p className="eyebrow">{project.category} / {project.time}</p><h1>{project.title}</h1><p className="case-subtitle">{project.subtitle}</p><div className="case-facts"><div><span>PROJECT</span><strong>{project.name}</strong></div><div><span>ROLE</span><strong>{project.role}</strong></div><div><span>TEAM</span><strong>{project.company}</strong></div></div></div><div className="case-banner">{project.id==='xiaohuasheng'?<CaseImage src={media.xiaohuasheng.caseBanner} alt="小花生亲子阅读教育平台项目总览" banner/>:<MapArt/>}</div><div className="case-body content-shell"><aside className="case-sidebar"><span className="tiny-code">IN THIS CASE</span>{project.sections.map((s,i)=><a href={`#chapter-${i}`} key={s.label}><span>0{i+1}</span>{s.title}</a>)}<a href={profile.resume} download="张紫晴-体验设计简历.pdf" className="sidebar-resume">下载简历<Download size={13}/></a></aside><div className="case-chapters"><div className="case-overview"><span className="eyebrow">MY PART IN THE STORY</span><h2>我在其中做了什么</h2><p>{project.contribution}</p><div className="status-note"><Check size={16}/><span>{project.status}</span></div></div>{project.sections.map((s,i)=><section className="case-chapter" id={`chapter-${i}`} key={s.label}><span className="eyebrow">{s.label}</span><h2>{s.title}</h2><p>{s.body}</p>{s.insight&&<blockquote>{s.insight}</blockquote>}<CaseSectionVisual projectId={project.id} index={i} title={s.title} type={s.type}/></section>)}</div></div><section className="next-case content-shell"><span className="eyebrow">KEEP EXPLORING</span><a href={withBase(casePath(other.id))} onClick={e=>{if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();navigate(casePath(other.id));}}><div><span>下一个连接</span><h2>{other.name}</h2><p>{other.title}</p></div><ArrowUpRight size={50}/></a></section><div className="case-footer content-shell"><a href={withBase('/#contact')} className="text-link" onClick={e=>{if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();navigate('/','contact');}}>聊聊设计<ArrowUpRight size={16}/></a><span>张紫晴 / EXPERIENCE & UI DESIGN</span></div></main>;
 }
 
 function PreviewDialog({preview,onClose}) {

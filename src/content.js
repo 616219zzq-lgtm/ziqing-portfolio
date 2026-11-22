@@ -1,8 +1,8 @@
 // 首页吊牌素材与案例封面独立配置；null 保留灰色占位。
 const asset = path => `${import.meta.env.BASE_URL}${path}`;
 export const heroMedia = {
-  xiaohuasheng: asset('assets/projects/xiaohuasheng-cover.png'),
-  flarewild: asset('assets/projects/flarewild-cover.png'),
+  xiaohuasheng: asset('assets/projects/xiaohuasheng-cover.jpg'),
+  flarewild: asset('assets/projects/flarewild-cover.jpg'),
   everydayIdeas: asset('assets/hero/everyday-ideas.webp'),
   connect: asset('assets/hero/connect.webp'),
   designExploration: asset('assets/hero/design-exploration.webp'),
@@ -16,8 +16,8 @@ export const explorationCovers = {
   more: asset('assets/projects/more-explorations-cover.png'),
 };
 export const media = {
-  xiaohuasheng: { cover: asset('assets/projects/xiaohuasheng-cover.png'), chapters: {} },
-  flarewild: { cover: asset('assets/projects/flarewild-cover.png'), video: null, poster: null, chapters: {} },
+  xiaohuasheng: { cover: asset('assets/projects/xiaohuasheng-cover.jpg'), chapters: {} },
+  flarewild: { cover: asset('assets/projects/flarewild-cover.jpg'), video: null, poster: null, chapters: {} },
 };
 export const profile = {
   name: '张紫晴', english: 'Ziqing Zhang', role: '体验设计 / UI 设计',

@@ -1,16 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, RotateCw, Download, Copy, Check, Menu, X, Plus, MapPin, Smartphone, Signal, Battery } from 'lucide-react';
 import { profile, projects, explorations, media, motionClips, heroMedia, phonePortrait, explorationCovers } from './content';
 import ProfileCard from './components/ProfileCard';
 import ClosingBadge from './components/ClosingBadge';
 import GalleryTilt from './components/GalleryTilt';
-import PatternWaves from './components/PatternWaves';
 import './style.css';
 import './components/Gallery.css';
 import { usePortfolioMotion } from './motion';
 
 const clamp = (n, min = 0, max = 1) => Math.min(max, Math.max(min, n));
+const PatternWaves = lazy(() => import('./components/PatternWaves'));
 const phase = (n, a, b) => clamp((n - a) / (b - a));
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -130,12 +130,12 @@ function Hero() {
 
 function PhoneStory() {
   const ref=useRef(null),scene=useRef(null),gesture=useRef(null),swiped=useRef(false);
-  const [active,setActive]=useState(1),[swing,setSwing]=useState(0),[mode,setMode]=useState('hand'),[chapter,setChapter]=useState(0);
+  const [active,setActive]=useState(1),[swing,setSwing]=useState(0),[mode,setMode]=useState('hand'),[chapter,setChapter]=useState(0),[showPattern,setShowPattern]=useState(false);
   const cards=['卡片 01','卡片 02','卡片 03'];
   const captions=[['Ideas, in motion.','从日常观察出发，让想法成为可以感知的体验。'],['A different perspective.','换一个视角，让想法面向更多人。'],['Made to connect.','让设计在真实的互动中，与人产生连接。'],['Take ideas with you.','把好奇心带入日常，也把观察带回设计。']];
   useEffect(()=>{
     let frame=0,last=0,current=0,velocity=0,target=0,previousScroll=scrollY;
-    let bounds=null,motionBounds=null,lastMode=null,lastChapter=-1;
+    let bounds=null,motionBounds=null,lastMode=null,lastChapter=-1,lastDark=false;
     const readBounds=()=>{const r=ref.current.getBoundingClientRect(),m=document.getElementById('motion')?.getBoundingClientRect();bounds={top:r.top+scrollY,height:r.height};motionBounds=m?{top:m.top+scrollY,bottom:m.bottom+scrollY}:null;};
     const mq=matchMedia('(prefers-reduced-motion: reduce)');
     const draw=p=>{
@@ -149,6 +149,7 @@ function PhoneStory() {
       const nextChapter=p<.28?0:p<.44?1:p<.6?2:3;
       if(lastChapter!==nextChapter){lastChapter=nextChapter;setChapter(nextChapter);}
       const dark=p>=.2&&p<.6;
+      if(lastDark!==dark){lastDark=dark;setShowPattern(dark);}
       scene.current.dataset.theme=p>=.6?'pocket':dark?'dark':'light';
       const motionDark=motionBounds&&motionBounds.top-scrollY<=62&&motionBounds.bottom-scrollY>62;
       document.documentElement.toggleAttribute('data-stage-dark',motionDark||(dark&&bounds.top<=scrollY&&bounds.top+bounds.height-scrollY>innerHeight*.5));
@@ -172,7 +173,7 @@ function PhoneStory() {
   },[]);
   const wearing=mode!=='hand';
   return <section className="phone-story centered-phone-story" id="intro" ref={ref} aria-label="手机随滚动旋转、悬挂与收入口袋"><div className={'phone-sticky mode-'+mode} ref={scene}>
-    <div className="phone-stage"><div className="phone-assembly"><div className="phone-body"><div className="phone-speaker"/><div className="phone-screen"><div className="phone-screen-dark"/><div className="phone-pattern-layer" aria-hidden="true"><PatternWaves preset="silk" color="#ffffff" backgroundColor="#120f17" fade="edges" interactive cursorSize={50} cursorStrength={0.6} pattern="dot" wave="silk" spacing={9} markSize={0.95} depth={0.95} light={0} shine={0.8} contrast={1.2} speed={0.35} scale={1} direction={20} opacity={1} fadeSize={0.5} characters=".:-=+*#%@" intro paused={false}/></div>
+    <div className="phone-stage"><div className="phone-assembly"><div className="phone-body"><div className="phone-speaker"/><div className="phone-screen"><div className="phone-screen-dark"/><div className="phone-pattern-layer" aria-hidden="true">{showPattern&&<Suspense fallback={null}><PatternWaves preset="silk" color="#ffffff" backgroundColor="#120f17" fade="edges" interactive cursorSize={50} cursorStrength={0.6} pattern="dot" wave="silk" spacing={9} markSize={0.95} depth={0.95} light={0} shine={0.8} contrast={1.2} speed={0.35} scale={1} direction={20} opacity={1} fadeSize={0.5} characters=".:-=+*%@" intro/></Suspense>}</div>
       <div className="phone-screen-label"><span>9:41</span><span className="phone-status-icons"><Signal size={12}/><Battery size={17}/></span></div>
       <button className="phone-swing" onClick={()=>setSwing(n=>n+1)} tabIndex={wearing?-1:0} aria-hidden={wearing} aria-label="轻摇手机卡片"><Smartphone size={10}/>Swing</button>
       <div className="phone-card-window" onClickCapture={e=>{if(swiped.current){e.preventDefault();e.stopPropagation();swiped.current=false;}}} onPointerDown={e=>{if(wearing)return;swiped.current=false;gesture.current=e.clientX;}} onPointerUp={e=>{if(gesture.current!==null){const dx=e.clientX-gesture.current;swiped.current=Math.abs(dx)>12;if(Math.abs(dx)>30)setActive(n=>clamp(n+(dx<0?1:-1),0,2));}gesture.current=null;}} onPointerCancel={()=>{gesture.current=null;}}>

@@ -1,31 +1,31 @@
 // 首页吊牌素材与案例封面独立配置；null 保留灰色占位。
 const asset = path => `${import.meta.env.BASE_URL}${path}`;
 export const heroMedia = {
-  xiaohuasheng: asset('assets/projects/xiaohuasheng-cover.jpg'),
-  flarewild: asset('assets/projects/flarewild-cover.jpg'),
-  everydayIdeas: asset('assets/hero/everyday-ideas.webp'),
-  connect: asset('assets/hero/connect.webp'),
-  designExploration: asset('assets/hero/design-exploration.webp'),
-  curiosity: asset('assets/hero/curiosity.webp'),
-  visualStories: asset('assets/hero/visual-stories-gradient.webp'),
-  moreToCome: asset('assets/hero/warm-gradient.webp'),
+  xiaohuasheng: asset('assets/projects/xiaohuasheng-cover-web.webp'),
+  flarewild: asset('assets/projects/flarewild-cover-web.webp'),
+  everydayIdeas: asset('assets/hero/everyday-ideas-web.webp'),
+  connect: asset('assets/hero/connect-web.webp'),
+  designExploration: asset('assets/hero/design-exploration-web.webp'),
+  curiosity: asset('assets/hero/curiosity-web.webp'),
+  visualStories: asset('assets/hero/visual-stories-gradient-web.webp'),
+  moreToCome: asset('assets/hero/warm-gradient-web.webp'),
 };
 export const phonePortrait = asset('assets/phone/portrait.webp');
 export const explorationCovers = {
   touchMemory: asset('assets/explorations/touch-memory-cover.png'),
-  more: asset('assets/projects/more-explorations-cover.png'),
+  more: asset('assets/projects/more-explorations-cover-web.webp'),
 };
 export const media = {
-  xiaohuasheng: { cover: asset('assets/projects/xiaohuasheng-cover.jpg'), chapters: {} },
-  flarewild: { cover: asset('assets/projects/flarewild-cover.jpg'), video: null, poster: null, chapters: {} },
+  xiaohuasheng: { cover: asset('assets/projects/xiaohuasheng-cover-web.webp'), chapters: {} },
+  flarewild: { cover: asset('assets/projects/flarewild-cover-web.webp'), video: null, poster: null, chapters: {} },
 };
 export const profile = {
   name: '张紫晴', english: 'Ziqing Zhang', role: '体验设计 / UI 设计',
   email: '3551194747@qq.com', wechat: 'Z13673185526', phone: '13673185526',
-  resume: asset('assets/resume.pdf'), portrait: asset('assets/about/contact-portrait.jpg'), reflectionVideo: null,
+  resume: asset('assets/resume.pdf'), portrait: asset('assets/about/contact-portrait-web.webp'), reflectionVideo: null,
 };
 export const projects = [
-  { id: 'xiaohuasheng', number: '01', name: '小花生', english: 'READING, RECONNECTED.', category: '亲子阅读 · 社区体验', time: '2025.06 — 2026.03', company: '上海慧力信息技术有限公司', role: 'UI/UX 设计实习', casePdf: asset('assets/xiaohuasheng-case.pdf'),
+  { id: 'xiaohuasheng', number: '01', name: '小花生', english: 'READING, RECONNECTED.', category: '亲子阅读 · 社区体验', time: '2025.06 — 2026.03', company: '上海慧力信息技术有限公司', role: 'UI/UX 设计实习',
     title: '让阅读之后的连接，继续发生。', subtitle: '从社群中的真实需求，到书圈转转与个性化阅读体验。',
     summary: '从家长的闲置童书需求出发，提出并协同推进「书圈转转」，连接原有阅读行为与同城流转。', tags: ['用户洞察', '个性化体验', '社区设计'], color: '#f2c9ac',
     contribution: '整理社群反馈并提出书圈转转需求，阐述用户场景与交互方案，与产品和开发讨论业务规则、技术可行性及定位隐私。',
@@ -52,14 +52,14 @@ export const projects = [
     ] },
 ];
 export const explorations = [
-  { name: '触忆', english: 'TOUCH MEMORY', image: asset('assets/explorations/touch-memory-cover.jpg'), text: '将回忆转化为可感知的体验，探索多模态 AI 与软硬件交互。', tags: '智能交互 / 软硬件体验', alt: '触忆项目封面', tone: 'warm' },
-  { name: '乡音 · 方言交互', english: 'LOCAL VOICES', image: asset('assets/explorations/local-voice-cover.png'), href: 'https://616219zzq-lgtm.github.io/', text: '围绕无锡南长街大窑路智新坊，探索方言的参与式表达。', tags: '在地文化 / 参与式体验', alt: '乡音项目封面', tone: 'green' },
+  { name: '触忆', english: 'TOUCH MEMORY', image: asset('assets/explorations/touch-memory-cover-web.webp'), text: '将回忆转化为可感知的体验，探索多模态 AI 与软硬件交互。', tags: '智能交互 / 软硬件体验', alt: '触忆项目封面', tone: 'warm' },
+  { name: '乡音 · 方言交互', english: 'LOCAL VOICES', image: asset('assets/explorations/local-voice-cover-web.webp'), href: 'https://616219zzq-lgtm.github.io/', text: '围绕无锡南长街大窑路智新坊，探索方言的参与式表达。', tags: '在地文化 / 参与式体验', alt: '乡音项目封面', tone: 'green' },
 ];
 
 // 首页 FlareWild 道具互动的视频播放顺序。
 export const motionClips = [
-  { id: 'overview', title: '概况', src: asset('assets/flarewild/videos/overview.mp4'), poster: null },
-  { id: 'treasure-chest', title: '开宝箱', src: asset('assets/flarewild/videos/treasure-chest.mp4'), poster: null },
-  { id: 'interactive-props', title: '互动道具', src: asset('assets/flarewild/videos/interactive-props.mp4'), poster: null },
-  { id: 'broadcast-props', title: '公放道具', src: asset('assets/flarewild/videos/broadcast-props.mp4'), poster: null },
+  { id: 'overview', title: '概况', src: asset('assets/flarewild/videos/overview-web.mp4'), poster: asset('assets/flarewild/videos/overview-poster.jpg') },
+  { id: 'treasure-chest', title: '开宝箱', src: asset('assets/flarewild/videos/treasure-chest-web.mp4'), poster: asset('assets/flarewild/videos/treasure-chest-poster.jpg') },
+  { id: 'interactive-props', title: '互动道具', src: asset('assets/flarewild/videos/interactive-props-web.mp4'), poster: asset('assets/flarewild/videos/interactive-props-poster.jpg') },
+  { id: 'broadcast-props', title: '公放道具', src: asset('assets/flarewild/videos/broadcast-props-web.mp4'), poster: asset('assets/flarewild/videos/broadcast-props-poster.jpg') },
 ];

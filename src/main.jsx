@@ -57,7 +57,7 @@ function ProjectMedia({ src, alt, video = false, poster }) {
   if (!src || failed) return <ProjectPlaceholder label={alt} video={video}/>;
   const mediaUrl=src.startsWith('/')?(src.startsWith(`${BASE_PATH}/`)?src:withBase(src)):src;
   const posterUrl=poster?(poster.startsWith('/')?withBase(poster):poster):undefined;
-  return video ? <video ref={element} className="project-media" src={mediaUrl} poster={posterUrl} controls muted playsInline preload="metadata" onError={()=>setFailed(true)} aria-label={alt}/> : <img className="project-media" src={mediaUrl} alt={alt} loading="lazy" onError={()=>setFailed(true)}/>;
+  return video ? <video ref={element} className="project-media" src={mediaUrl} poster={posterUrl} controls muted playsInline preload="metadata" onError={()=>setFailed(true)} aria-label={alt}/> : <img className="project-media" src={mediaUrl} alt={alt} loading="lazy" decoding="async" onError={()=>setFailed(true)}/>;
 }
 
 function PeanutArt() {
@@ -184,7 +184,7 @@ function PhoneStory() {
       <button className="phone-swing" onClick={()=>setSwing(n=>n+1)} tabIndex={wearing?-1:0} aria-hidden={wearing} aria-label="轻摇手机卡片"><Smartphone size={10}/>Swing</button>
       <div className="phone-card-window" onClickCapture={e=>{if(swiped.current){e.preventDefault();e.stopPropagation();swiped.current=false;}}} onPointerDown={e=>{if(wearing)return;swiped.current=false;gesture.current=e.clientX;}} onPointerUp={e=>{if(gesture.current!==null){const dx=e.clientX-gesture.current;swiped.current=Math.abs(dx)>12;if(Math.abs(dx)>30)setActive(n=>clamp(n+(dx<0?1:-1),0,2));}gesture.current=null;}} onPointerCancel={()=>{gesture.current=null;}}>
         <div className="phone-card-track"><div className={'phone-cards-motion '+(swing?'is-swinging':'')} key={swing}><div className="phone-inner-lanyard" aria-hidden="true"><div className="inner-ribbon-tip"/></div>{cards.map((label,i)=><div className={'phone-preview-card '+(active===i?'is-active':'')} style={{'--card-offset':i-active}} key={label} onClick={e=>{if(!wearing&&!e.target.closest('button,a'))setActive(i);}} onKeyDown={e=>{if(e.target===e.currentTarget&&(e.key==='Enter'||e.key===' ')){e.preventDefault();setActive(i);}}} tabIndex={!wearing&&active===i?0:-1} role="group" aria-hidden={wearing&&active!==i} aria-label={label+(active===i?'，当前卡片':'')} inert={wearing&&active!==i}>
-          {i===1 ? <img className="phone-personal-art" src={withBase('/assets/phone/personal-card.png')} alt="张紫晴，体验设计 / UI设计" draggable="false"/> : <ProfileCard name="" title="" handle="ziqing" status="欢迎交流" contactText="联系我" avatarUrl={withBase(['/assets/phone/reading-card.webp','','/assets/phone/flarewild-card.webp'][i])} contactTabIndex={active===i?0:-1} holo={0.8} glare={0.5} tiltStrength={12} parallax={8} radius={16} enableTilt={!wearing} intro={false} showUserInfo={false} enableMobileTilt={false} theme="dark" onContactClick={()=>{document.getElementById('contact')?.scrollIntoView({behavior:reduceMotion()?'instant':'smooth'});}}/>}
+          {i===1 ? <img className="phone-personal-art" loading="lazy" decoding="async" src={withBase('/assets/phone/personal-card-web.webp')} alt="张紫晴，体验设计 / UI设计" draggable="false"/> : <ProfileCard name="" title="" handle="ziqing" status="欢迎交流" contactText="联系我" avatarUrl={withBase(['/assets/phone/reading-card-web.webp','','/assets/phone/flarewild-card-web.webp'][i])} contactTabIndex={active===i?0:-1} holo={0.8} glare={0.5} tiltStrength={12} parallax={8} radius={16} enableTilt={!wearing} intro={false} showUserInfo={false} enableMobileTilt={false} theme="dark" onContactClick={()=>{document.getElementById('contact')?.scrollIntoView({behavior:reduceMotion()?'instant':'smooth'});}}/>}
         </div>)}</div></div>
       </div>
       <div className="phone-pagination" aria-label="手机卡片切换" inert={wearing} aria-hidden={wearing}>{cards.map((label,i)=><button key={label} className={active===i?'current':''} aria-label={'切换到'+label} aria-pressed={active===i} onClick={()=>setActive(i)}/>)}</div><span className="phone-screen-footer">ZIQING ZHANG · PORTFOLIO</span>
@@ -241,7 +241,7 @@ function Gallery({ navigate }) {
               <div className="project-cover">{i===0?<PeanutArt/>:i===1?<MapArt/>:<ProjectMedia src={explorationCovers.more} alt="更多探索 · 项目封面"/>}</div><i className="project-badge-slot"/>
               <div className="project-card-copy"><h3>{p.name}</h3><p>{p.category}</p><div className="gallery-card-actions">
                 <button className="card-flip" onClick={e=>{e.stopPropagation();if(dragged.current)return;if(i!==selected){select(i);return;}flip(i);}} aria-label={'翻面查看'+p.name+'速览'}><RotateCw size={16}/></button>
-                <a className="gallery-case-link" href={p.id==='explorations'?'#explorations':p.casePdf||withBase(casePath(p.id))} target={p.casePdf?'_blank':undefined} rel={p.casePdf?'noreferrer':undefined} onClick={e=>{if(p.id==='explorations'){e.stopPropagation();if(dragged.current)e.preventDefault();}else if(!p.casePdf)open(e,p.id);else {e.stopPropagation();if(dragged.current)e.preventDefault();}}}>{p.id==='explorations'?'查看探索':'查看案例'}<ArrowUpRight size={14}/></a>
+                <a className="gallery-case-link" href={p.id==='explorations'?'#explorations':withBase(casePath(p.id))} onClick={e=>{if(p.id==='explorations'){e.stopPropagation();if(dragged.current)e.preventDefault();}else open(e,p.id);}}>{p.id==='explorations'?'查看探索':'查看案例'}<ArrowUpRight size={14}/></a>
               </div></div>
             </div>
             <div className="project-face project-back" inert={!flipped[i]} aria-hidden={!flipped[i]}><span className="tiny-code">PROJECT {p.number} / AT A GLANCE</span><h3>{p.name}</h3><p className="back-summary">{p.summary}</p><div className="back-contribution"><span>我的贡献</span><p>{p.contribution}</p></div><div className="project-tags">{(p.tags||[]).map(t=><span key={t}>{t}</span>)}</div><button className="card-flip" onClick={e=>{e.stopPropagation();flip(i);}} aria-label={'返回'+p.name+'正面'}><RotateCw size={16}/></button></div>
@@ -261,20 +261,32 @@ function VideoSlot() {
 function MotionClip({ clip }) {
   const ref=useRef(null);
   const [failed,setFailed]=useState(false);
+  const [nearby,setNearby]=useState(false);
   useEffect(()=>{
     const video=ref.current;
     if(!video)return;
     const observer=new IntersectionObserver(([entry])=>{
-      if(entry.isIntersecting&&!reduceMotion())video.play().catch(()=>{});
+      if(!entry.isIntersecting)return;
+      setNearby(true);
+      observer.disconnect();
+    },{rootMargin:'500px 0px'});
+    observer.observe(video);
+    return()=>observer.disconnect();
+  },[]);
+  useEffect(()=>{
+    const video=ref.current;
+    if(!video||!nearby)return;
+    const observer=new IntersectionObserver(([entry])=>{
+      if(entry.intersectionRatio>=.3&&!reduceMotion())video.play().catch(()=>{});
       else video.pause();
     },{threshold:.3});
     observer.observe(video);
     return()=>{observer.disconnect();video.pause();};
-  },[]);
+  },[nearby]);
   if(!clip.src||failed)return <ProjectPlaceholder label={clip.title} video/>;
   const source=clip.src.startsWith('/')?withBase(clip.src):clip.src;
   const poster=clip.poster?(clip.poster.startsWith('/')?withBase(clip.poster):clip.poster):undefined;
-  return <video ref={ref} src={source} poster={poster} controls muted loop playsInline preload="metadata" onError={()=>setFailed(true)} aria-label={clip.title}/>;
+  return <video ref={ref} src={nearby?source:undefined} poster={nearby?poster:undefined} controls={nearby} muted loop playsInline preload="metadata" onError={()=>setFailed(true)} aria-label={clip.title}/>;
 }
 
 function MotionSpotlight() {
@@ -303,11 +315,11 @@ function About({ copy }) {
     {start:['2026','03'],end:['2026','09'],company:'无锡旋涡动力Vortex Force',body:'参与 FlareWild 海外地图社交 App 从 0 到 1 设计，核心产出涵盖地图社交、虚拟互动道具及商业化功能，完成 50+ 低保真原型与 30+ 高保真页面。积累 C 端社交产品交互、信息架构及海外用户体验设计能力，并参与 AI 内容冷启动实验，提升对社区增长与 AI 辅助设计的理解。'},
   ];
   return <section id="about" className="about-section about-editorial" aria-label="关于张紫晴">
-    <div className="about-wordmark" aria-hidden="true"><img src={asset('wordmark')} width={3615} height={447} alt=""/></div>
+    <div className="about-wordmark" aria-hidden="true"><img src={asset('wordmark-web')} width={3615} height={447} alt="" loading="lazy" decoding="async"/></div>
     <div className="about-editorial-content">
       <div className="about-profile">
         <h2 className="about-identity"><img src={asset('identity')} width={869} height={442} alt="张紫晴 Zoey · 江南大学 设计研究生" loading="lazy"/></h2>
-        <div className="about-portrait"><img src={asset('portrait')} width={706} height={880} alt="张紫晴的个人照片" loading="lazy"/></div>
+        <div className="about-portrait"><img src={asset('portrait-web')} width={706} height={880} alt="张紫晴的个人照片" loading="lazy"/></div>
       </div>
       <div className="about-experience">
         <h3><img src={asset('experience')} width={666} height={79} alt="实习经历 Experience" loading="lazy"/></h3>

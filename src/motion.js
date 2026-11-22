@@ -26,7 +26,7 @@ export function usePortfolioMotion(path) {
       };
       const titleLines = scope => [...scope.querySelectorAll('.motion-title .title-line')];
       const hero = document.querySelector('.reference-hero');
-      if (hero && scrollY < 30 && !location.hash) {
+      if (hero && !mobile && scrollY < 30 && !location.hash) {
         const opening = gsap.timeline({ defaults: { ease }, onComplete:()=>ScrollTrigger.refresh() });
         gsap.set('.hero-badges',{scale:.96,autoAlpha:0});
         opening.fromTo('.home-header',{y:-50,autoAlpha:0},{y:0,autoAlpha:1,duration:1.05,clearProps:'transform,opacity,visibility'},.08)

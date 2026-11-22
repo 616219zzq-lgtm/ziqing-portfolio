@@ -489,14 +489,21 @@ const PatternWaves = ({
     const container = containerRef.current;
     if (!container) return undefined;
 
-    const renderer = new Renderer({ alpha: true, premultipliedAlpha: true, antialias: false, depth: false });
+    let renderer;
+    try {
+      renderer = new Renderer({ alpha: true, premultipliedAlpha: true, antialias: false, depth: false });
+    } catch {
+      return undefined;
+    }
     const gl = renderer.gl;
     if (!renderer.isWebgl2) {
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      if (gl) gl.getExtension('WEBGL_lose_context')?.loseContext();
       return undefined;
     }
     gl.clearColor(0, 0, 0, 0);
     const canvas = gl.canvas;
+    canvas.style.position = 'absolute';
+    canvas.style.inset = '0';
     canvas.style.display = 'block';
     canvas.style.width = '100%';
     canvas.style.height = '100%';

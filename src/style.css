@@ -487,7 +487,7 @@ main:focus { outline: none; }
 .centered-phone-story .phone-body { width: 100%; height: 100%; border: calc(var(--device-w) * .025) solid #080809; border-radius: calc(var(--device-w) * .15); box-shadow: 0 0 0 3px #535e77; transform: rotate(var(--phone-angle)) scale(var(--phone-scale, 1)); }
 .centered-phone-story .phone-screen { border-radius: calc(var(--device-w) * .124); }
 .phone-screen-dark { position: absolute; inset: 0; background: #000; opacity: var(--wear); }
-.phone-pattern-layer { position: absolute; inset: 0; z-index: 1; opacity: var(--wear); transition: opacity .45s ease; pointer-events: none; }
+.phone-pattern-layer { position: absolute; inset: 0; z-index: 1; overflow: hidden; opacity: var(--wear); transition: opacity .45s ease; pointer-events: none; }
 .phone-pattern-layer .pattern-waves { pointer-events: auto; }
 .phone-pattern-layer canvas { pointer-events: auto; }
 .phone-card-window, .phone-pagination, .phone-screen-footer { z-index: 2; }

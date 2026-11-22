@@ -49,7 +49,7 @@ function ProjectMedia({ src, alt, video = false, poster }) {
     return ()=>observer.disconnect();
   }, [video, src, failed]);
   if (!src || failed) return <ProjectPlaceholder label={alt} video={video}/>;
-  const mediaUrl=src.startsWith('/')?withBase(src):src;
+  const mediaUrl=src.startsWith('/')?(src.startsWith(`${BASE_PATH}/`)?src:withBase(src)):src;
   const posterUrl=poster?(poster.startsWith('/')?withBase(poster):poster):undefined;
   return video ? <video ref={element} className="project-media" src={mediaUrl} poster={posterUrl} controls muted playsInline preload="metadata" onError={()=>setFailed(true)} aria-label={alt}/> : <img className="project-media" src={mediaUrl} alt={alt} loading="lazy" onError={()=>setFailed(true)}/>;
 }
@@ -122,7 +122,7 @@ function Hero() {
   ];
   return <section ref={hero} className="hero-section reference-hero" aria-labelledby="hero-title">
     <div className="hero-badges" aria-label="八张作品吊牌">{badges.map((badge,i)=><div className={'hero-badge badge-'+badge.position} key={badge.position} style={{'--drift-duration':(6+i%4*1.3)+'s','--drift-delay':(-i*1.7)+'s','--depth':i%3===0?1:.55}}>
-      <div className="hero-badge-strap"/><div className="hero-badge-surface"><ProfileCard name="" title="" avatarUrl={withBase(badge.src)} holo={0.8} glare={0.5} parallax={0} radius={16} enableTilt={false} intro={false} showUserInfo={false} theme="light"/><i className="hero-badge-slot"/></div>
+      <div className="hero-badge-strap"/><div className="hero-badge-surface"><ProfileCard name="" title="" avatarUrl={badge.src} holo={0.8} glare={0.5} parallax={0} radius={16} enableTilt={false} intro={false} showUserInfo={false} theme="light"/><i className="hero-badge-slot"/></div>
     </div>)}</div>
     <div className="hero-copy"><p className="eyebrow">Experience &amp; UI Designer</p><h1 id="hero-title" aria-label="Turn ideas into experiences.">{['Turn ideas','into experiences.'].map(word=><span className="title-mask" key={word}><span className="title-line">{word}</span></span>)}</h1><p className="hero-description">换一个视角，跳出常规<br/>去挖掘用户容易被忽略的需求</p><a href={withBase('/#work')} className="button button-dark">查看精选项目</a></div>
   </section>;
@@ -172,7 +172,7 @@ function PhoneStory() {
   },[]);
   const wearing=mode!=='hand';
   return <section className="phone-story centered-phone-story" id="intro" ref={ref} aria-label="手机随滚动旋转、悬挂与收入口袋"><div className={'phone-sticky mode-'+mode} ref={scene}>
-    <div className="phone-stage"><div className="phone-assembly"><div className="phone-body"><div className="phone-speaker"/><div className="phone-screen"><div className="phone-screen-dark"/><div className="phone-pattern-layer" aria-hidden="true"><PatternWaves preset="silk" color="#ffffff" backgroundColor="#120f17" fade="edges" interactive cursorSize={50} cursorStrength={0.6} pattern="dot" wave="silk" spacing={9} markSize={0.95} depth={0.95} light={0} shine={0.8} contrast={1.2} speed={0.35} scale={1} direction={20} opacity={1} fadeSize={0.5} characters=".:-=+*#%@" intro paused={wearing===false}/></div>
+    <div className="phone-stage"><div className="phone-assembly"><div className="phone-body"><div className="phone-speaker"/><div className="phone-screen"><div className="phone-screen-dark"/><div className="phone-pattern-layer" aria-hidden="true"><PatternWaves preset="silk" color="#ffffff" backgroundColor="#120f17" fade="edges" interactive cursorSize={50} cursorStrength={0.6} pattern="dot" wave="silk" spacing={9} markSize={0.95} depth={0.95} light={0} shine={0.8} contrast={1.2} speed={0.35} scale={1} direction={20} opacity={1} fadeSize={0.5} characters=".:-=+*#%@" intro paused={false}/></div>
       <div className="phone-screen-label"><span>9:41</span><span className="phone-status-icons"><Signal size={12}/><Battery size={17}/></span></div>
       <button className="phone-swing" onClick={()=>setSwing(n=>n+1)} tabIndex={wearing?-1:0} aria-hidden={wearing} aria-label="轻摇手机卡片"><Smartphone size={10}/>Swing</button>
       <div className="phone-card-window" onClickCapture={e=>{if(swiped.current){e.preventDefault();e.stopPropagation();swiped.current=false;}}} onPointerDown={e=>{if(wearing)return;swiped.current=false;gesture.current=e.clientX;}} onPointerUp={e=>{if(gesture.current!==null){const dx=e.clientX-gesture.current;swiped.current=Math.abs(dx)>12;if(Math.abs(dx)>30)setActive(n=>clamp(n+(dx<0?1:-1),0,2));}gesture.current=null;}} onPointerCancel={()=>{gesture.current=null;}}>

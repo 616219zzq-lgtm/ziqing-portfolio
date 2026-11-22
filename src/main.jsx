@@ -123,7 +123,7 @@ function Hero() {
     <div className="hero-badges" aria-label="八张作品吊牌">{badges.map((badge,i)=><div className={'hero-badge badge-'+badge.position} key={badge.position} style={{'--drift-duration':(6+i%4*1.3)+'s','--drift-delay':(-i*1.7)+'s','--depth':i%3===0?1:.55}}>
       <div className="hero-badge-strap"/><div className="hero-badge-surface"><ProfileCard name="" title="" avatarUrl={withBase(badge.src)} holo={0.8} glare={0.5} parallax={0} radius={16} enableTilt={false} intro={false} showUserInfo={false} theme="light"/><i className="hero-badge-slot"/></div>
     </div>)}</div>
-    <div className="hero-copy"><p className="eyebrow">Experience &amp; UI Designer</p><h1 id="hero-title" aria-label="Turn ideas into experiences.">{['Turn ideas','into','experiences.'].map(word=><span className="title-mask" key={word}><span className="title-line">{word}</span></span>)}</h1><p className="hero-description">你好，我是张紫晴。<br/>喜欢把观察转化为想法，<br/>也愿意和产品、开发一起，让想法落地。</p><a href={withBase('/#work')} className="button button-dark">查看精选项目</a></div>
+    <div className="hero-copy"><p className="eyebrow">Experience &amp; UI Designer</p><h1 id="hero-title" aria-label="Turn ideas into experiences.">{['Turn ideas','into','experiences.'].map(word=><span className="title-mask" key={word}><span className="title-line">{word}</span></span>)}</h1><p className="hero-description">你好，我是张紫晴。喜欢把观察转化为想法，<br/>也愿意和产品、开发一起，让想法落地。</p><a href={withBase('/#work')} className="button button-dark">查看精选项目</a></div>
   </section>;
 }
 
@@ -233,7 +233,7 @@ function Gallery({ navigate }) {
               <div className="project-cover">{i===0?<PeanutArt/>:i===1?<MapArt/>:<ProjectMedia src={explorationCovers.more} alt="更多探索 · 项目封面"/>}</div><i className="project-badge-slot"/>
               <div className="project-card-copy"><h3>{p.name}</h3><p>{p.category}</p><div className="gallery-card-actions">
                 <button className="card-flip" onClick={e=>{e.stopPropagation();if(dragged.current)return;if(i!==selected){select(i);return;}flip(i);}} aria-label={'翻面查看'+p.name+'速览'}><RotateCw size={16}/></button>
-                <a className="gallery-case-link" href={p.id==='explorations'?'#explorations':withBase(casePath(p.id))} onClick={e=>{if(p.id==='explorations'){e.stopPropagation();if(dragged.current)e.preventDefault();}else open(e,p.id);}}>{p.id==='explorations'?'查看探索':'查看案例'}<ArrowUpRight size={14}/></a>
+                <a className="gallery-case-link" href={p.id==='explorations'?'#explorations':p.casePdf||withBase(casePath(p.id))} target={p.casePdf?'_blank':undefined} rel={p.casePdf?'noreferrer':undefined} onClick={e=>{if(p.id==='explorations'){e.stopPropagation();if(dragged.current)e.preventDefault();}else if(!p.casePdf)open(e,p.id);else {e.stopPropagation();if(dragged.current)e.preventDefault();}}}>{p.id==='explorations'?'查看探索':'查看案例'}<ArrowUpRight size={14}/></a>
               </div></div>
             </div>
             <div className="project-face project-back" inert={!flipped[i]} aria-hidden={!flipped[i]}><span className="tiny-code">PROJECT {p.number} / AT A GLANCE</span><h3>{p.name}</h3><p className="back-summary">{p.summary}</p><div className="back-contribution"><span>我的贡献</span><p>{p.contribution}</p></div><div className="project-tags">{(p.tags||[]).map(t=><span key={t}>{t}</span>)}</div><button className="card-flip" onClick={e=>{e.stopPropagation();flip(i);}} aria-label={'返回'+p.name+'正面'}><RotateCw size={16}/></button></div>

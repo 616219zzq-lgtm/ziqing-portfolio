@@ -21,10 +21,10 @@ export const media = {
 export const profile = {
   name: '张紫晴', english: 'Ziqing Zhang', role: '体验设计 / UI 设计',
   email: '3551194747@qq.com', wechat: 'Z13673185526', phone: '13673185526',
-  resume: `${import.meta.env.BASE_URL}assets/resume.pdf`, portrait: null, reflectionVideo: null,
+  resume: `${import.meta.env.BASE_URL}assets/resume.pdf`, portrait: '/assets/about/contact-portrait.jpg', reflectionVideo: null,
 };
 export const projects = [
-  { id: 'xiaohuasheng', number: '01', name: '小花生', english: 'READING, RECONNECTED.', category: '亲子阅读 · 社区体验', time: '2025.06 — 2026.03', company: '上海慧力信息技术有限公司', role: 'UI/UX 设计实习',
+  { id: 'xiaohuasheng', number: '01', name: '小花生', english: 'READING, RECONNECTED.', category: '亲子阅读 · 社区体验', time: '2025.06 — 2026.03', company: '上海慧力信息技术有限公司', role: 'UI/UX 设计实习', casePdf: `${import.meta.env.BASE_URL}assets/xiaohuasheng-case.pdf`,
     title: '让阅读之后的连接，继续发生。', subtitle: '从社群中的真实需求，到书圈转转与个性化阅读体验。',
     summary: '从家长的闲置童书需求出发，提出并协同推进「书圈转转」，连接原有阅读行为与同城流转。', tags: ['用户洞察', '个性化体验', '社区设计'], color: '#f2c9ac',
     contribution: '整理社群反馈并提出书圈转转需求，阐述用户场景与交互方案，与产品和开发讨论业务规则、技术可行性及定位隐私。',
@@ -51,7 +51,7 @@ export const projects = [
     ] },
 ];
 export const explorations = [
-  { name: '触忆', english: 'TOUCH MEMORY', image: null, text: '将回忆转化为可感知的体验，探索多模态 AI 与软硬件交互。', tags: '智能交互 / 软硬件体验', alt: '触忆项目封面', tone: 'warm' },
+  { name: '触忆', english: 'TOUCH MEMORY', image: '/assets/explorations/touch-memory-cover.jpg', text: '将回忆转化为可感知的体验，探索多模态 AI 与软硬件交互。', tags: '智能交互 / 软硬件体验', alt: '触忆项目封面', tone: 'warm' },
   { name: '乡音 · 方言交互', english: 'LOCAL VOICES', image: '/assets/explorations/local-voice-cover.png', href: 'https://616219zzq-lgtm.github.io/', text: '围绕无锡南长街大窑路智新坊，探索方言的参与式表达。', tags: '在地文化 / 参与式体验', alt: '乡音项目封面', tone: 'green' },
 ];
 

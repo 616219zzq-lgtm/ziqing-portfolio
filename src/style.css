@@ -149,7 +149,7 @@ main:focus { outline: none; }
 .explorations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
 .exploration-card { background: transparent; text-align: left; padding: 0; min-width: 0; }
 .exploration-image { height: 315px; overflow: hidden; border-radius: 16px; position: relative; }
-.exploration-card.green .exploration-image img { width: 100%; height: 100%; object-fit: contain; background: #f4f3f1; }
+.exploration-image img { width: 100%; height: 100%; object-fit: cover; }
 .exploration-image .project-placeholder { transition: background .4s; }
 .exploration-card:hover .project-placeholder { background: #ddd; }
 .exploration-info { padding: 23px 2px 0; }
@@ -740,8 +740,7 @@ html[data-stage-dark] .home-header .nav-resume { color: #111; background: #fff; 
 .closing-ribbon { position:relative;z-index:2;display:block;width:48px;height:528px;background:linear-gradient(#ffffff33,#0006),#f4f4f4;box-shadow:2px 6px 10px #0005; }
 .closing-badge-button { display:block;width:260px;padding:0;margin-top:-12.1875px;background:transparent;cursor:pointer;touch-action:pan-y; }
 .closing-photo-card { aspect-ratio:320/505;width:100%;display:flex;flex-direction:column;overflow:hidden;border-radius:19.5px;transform-origin:50% 4%;text-align:left;background:#96999e;box-shadow:0 20px 36px #004b9524; }
-.closing-card-art { min-height:0;flex:1;width:100%;overflow:hidden; }
-.closing-card-art img { width:100%;height:100%;object-fit:cover;display:block; }
+.closing-card-full-image { width:100%;height:100%;object-fit:cover;display:block; }
 .closing-photo-placeholder { height:100%;background:#b4b7bc;display:grid;place-items:center;color:#d6d8dc; }
 .closing-photo-placeholder > span { font-size:25px;font-weight:200; }
 .closing-card-caption { position:relative;min-height:110.5px;padding:13px;overflow:hidden;flex-shrink:0;background:linear-gradient(125deg,#8d9096,#686c74); }
@@ -769,9 +768,6 @@ html[data-stage-dark] .home-header .nav-resume { color: #111; background: #fff; 
  .closing-ribbon {width:40px;height:480px;}
  .closing-badge-button {width:220px;margin-top:-10.3125px;}
  .closing-photo-card {border-radius:16.5px;}
- .closing-card-caption {min-height:93.5px;padding:11px;}
- .closing-card-caption strong {font-size:27.5px;}
- .closing-card-caption span {font-size:11px;margin-top:2.75px;}
  .reference-contact .contact-copy {padding:56px 0 72px;}
  .reference-contact .contact-copy h2 {font-size:clamp(32px,8.8vw,48px);}
  .reference-contact .contact-copy > p {font-size:16px;}

@@ -259,34 +259,53 @@ function VideoSlot() {
 }
 
 function MotionClip({ clip }) {
-  const ref=useRef(null);
-  const [failed,setFailed]=useState(false);
-  const [nearby,setNearby]=useState(false);
-  useEffect(()=>{
-    const video=ref.current;
-    if(!video)return;
-    const observer=new IntersectionObserver(([entry])=>{
-      if(!entry.isIntersecting)return;
+  const ref = useRef(null);
+  const [nearby, setNearby] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video || !('IntersectionObserver' in window)) return;
+    const warmup = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
       setNearby(true);
-      observer.disconnect();
-    },{rootMargin:'500px 0px'});
-    observer.observe(video);
-    return()=>observer.disconnect();
-  },[]);
-  useEffect(()=>{
-    const video=ref.current;
-    if(!video||!nearby)return;
-    const observer=new IntersectionObserver(([entry])=>{
-      if(entry.intersectionRatio>=.3&&!reduceMotion())video.play().catch(()=>{});
-      else video.pause();
-    },{threshold:.3});
-    observer.observe(video);
-    return()=>{observer.disconnect();video.pause();};
-  },[nearby]);
-  if(!clip.src||failed)return <ProjectPlaceholder label={clip.title} video/>;
-  const source=clip.src.startsWith('/')?withBase(clip.src):clip.src;
-  const poster=clip.poster?(clip.poster.startsWith('/')?withBase(clip.poster):clip.poster):undefined;
-  return <video ref={ref} src={nearby?source:undefined} poster={nearby?poster:undefined} controls={nearby} muted loop playsInline preload="metadata" onError={()=>setFailed(true)} aria-label={clip.title}/>;
+      warmup.disconnect();
+    }, { rootMargin: '1300px 0px' });
+    const playback = new IntersectionObserver(([entry]) => {
+      if (entry.intersectionRatio >= .3) {
+        if (!reduceMotion()) video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    }, { threshold: .3 });
+    warmup.observe(video);
+    playback.observe(video);
+    return () => {
+      warmup.disconnect();
+      playback.disconnect();
+      video.pause();
+    };
+  }, []);
+
+  if (!clip.src) return <ProjectPlaceholder label={clip.title} video/>;
+  const play = () => {
+    const video = ref.current;
+    if (failed) {
+      setFailed(false);
+      video.load();
+    }
+    video.play().catch(() => {});
+  };
+
+  return <>
+    <video ref={ref} src={withBase(clip.src)} poster={clip.poster ? withBase(clip.poster) : undefined}
+      controls muted loop playsInline preload={nearby ? 'auto' : 'none'} aria-label={clip.title}
+      onPlaying={() => setPlaying(true)} onPause={() => setPlaying(false)}
+      onError={() => { setPlaying(false); setFailed(true); }}/>
+    {!playing && <button type="button" className="motion-play-button" onClick={play}
+      aria-label={(failed ? '重试播放' : '播放') + clip.title}>{failed ? '重试播放' : '▶'}</button>}
+  </>;
 }
 
 function MotionSpotlight() {

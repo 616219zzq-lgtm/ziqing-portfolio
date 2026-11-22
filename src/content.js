@@ -52,14 +52,14 @@ export const projects = [
     ] },
 ];
 export const explorations = [
-  { name: '触忆', english: 'TOUCH MEMORY', image: asset('assets/explorations/touch-memory-cover-web.webp'), text: '将回忆转化为可感知的体验，探索多模态 AI 与软硬件交互。', tags: '智能交互 / 软硬件体验', alt: '触忆项目封面', tone: 'warm' },
+  { name: '触忆', english: 'TOUCH MEMORY', image: asset('assets/explorations/touch-memory-cover-web.webp'), text: 'App 搭配触感手机壳的多感官情感交互项目', tags: '智能交互 / 软硬件体验', alt: '触忆项目封面', tone: 'warm' },
   { name: '乡音 · 方言交互', english: 'LOCAL VOICES', image: asset('assets/explorations/local-voice-cover-web.webp'), href: 'https://616219zzq-lgtm.github.io/', text: '围绕无锡南长街大窑路智新坊，探索方言的参与式表达。', tags: '在地文化 / 参与式体验', alt: '乡音项目封面', tone: 'green' },
 ];
 
 // 首页 FlareWild 道具互动的视频播放顺序。
 export const motionClips = [
-  { id: 'overview', title: '概况', src: asset('assets/flarewild/videos/overview-web.mp4'), poster: asset('assets/flarewild/videos/overview-poster.jpg') },
-  { id: 'treasure-chest', title: '开宝箱', src: asset('assets/flarewild/videos/treasure-chest-web.mp4'), poster: asset('assets/flarewild/videos/treasure-chest-poster.jpg') },
-  { id: 'interactive-props', title: '互动道具', src: asset('assets/flarewild/videos/interactive-props-web.mp4'), poster: asset('assets/flarewild/videos/interactive-props-poster.jpg') },
-  { id: 'broadcast-props', title: '公放道具', src: asset('assets/flarewild/videos/broadcast-props-web.mp4'), poster: asset('assets/flarewild/videos/broadcast-props-poster.jpg') },
+  { id: 'overview', title: '概况', src: asset('assets/flarewild/videos/overview-stream.mp4'), poster: asset('assets/flarewild/videos/overview-poster.jpg') },
+  { id: 'treasure-chest', title: '开宝箱', src: asset('assets/flarewild/videos/treasure-chest-stream.mp4'), poster: asset('assets/flarewild/videos/treasure-chest-poster.jpg') },
+  { id: 'interactive-props', title: '互动道具', src: asset('assets/flarewild/videos/interactive-props-stream.mp4'), poster: asset('assets/flarewild/videos/interactive-props-poster.jpg') },
+  { id: 'broadcast-props', title: '公放道具', src: asset('assets/flarewild/videos/broadcast-props-stream.mp4'), poster: asset('assets/flarewild/videos/broadcast-props-poster.jpg') },
 ];

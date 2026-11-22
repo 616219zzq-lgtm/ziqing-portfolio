@@ -58,8 +58,8 @@ export const explorations = [
 
 // 首页 FlareWild 道具互动的视频播放顺序。
 export const motionClips = [
-  { id: 'overview', title: '概况', src: asset('assets/flarewild/videos/overview-stream.mp4'), poster: asset('assets/flarewild/videos/overview-poster.jpg') },
-  { id: 'treasure-chest', title: '开宝箱', src: asset('assets/flarewild/videos/treasure-chest-stream.mp4'), poster: asset('assets/flarewild/videos/treasure-chest-poster.jpg') },
-  { id: 'interactive-props', title: '互动道具', src: asset('assets/flarewild/videos/interactive-props-stream.mp4'), poster: asset('assets/flarewild/videos/interactive-props-poster.jpg') },
-  { id: 'broadcast-props', title: '公放道具', src: asset('assets/flarewild/videos/broadcast-props-stream.mp4'), poster: asset('assets/flarewild/videos/broadcast-props-poster.jpg') },
+  { id: 'overview', title: '概况', src: asset('assets/flarewild/videos/overview-detail.mp4'), poster: asset('assets/flarewild/videos/overview-poster.jpg') },
+  { id: 'treasure-chest', title: '开宝箱', src: asset('assets/flarewild/videos/treasure-chest-detail.mp4'), poster: asset('assets/flarewild/videos/treasure-chest-poster.jpg') },
+  { id: 'interactive-props', title: '互动道具', src: asset('assets/flarewild/videos/interactive-props-detail.mp4'), poster: asset('assets/flarewild/videos/interactive-props-poster.jpg') },
+  { id: 'broadcast-props', title: '公放道具', src: asset('assets/flarewild/videos/broadcast-props-detail.mp4'), poster: asset('assets/flarewild/videos/broadcast-props-poster.jpg') },
 ];

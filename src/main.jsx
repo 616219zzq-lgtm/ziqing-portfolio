@@ -14,7 +14,13 @@ const PatternWaves = lazy(() => import('./components/PatternWaves'));
 const phase = (n, a, b) => clamp((n - a) / (b - a));
 const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, '');
-const withBase = path => `${BASE_PATH}${path.startsWith('/') ? path : `/${path}`}`;
+const withBase = path => {
+  if (/^(https?:|data:|blob:)/.test(path)) return path;
+  const normalized = path.startsWith('/') ? path : `/${path}`;
+  return BASE_PATH && (normalized === BASE_PATH || normalized.startsWith(`${BASE_PATH}/`))
+    ? normalized
+    : `${BASE_PATH}${normalized}`;
+};
 const casePath = id => `/projects/${id}`;
 const routePath = pathname => {
   const path=pathname.replace(/\/$/, '')||'/';

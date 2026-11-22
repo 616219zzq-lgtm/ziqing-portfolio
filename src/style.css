@@ -149,6 +149,7 @@ main:focus { outline: none; }
 .explorations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
 .exploration-card { background: transparent; text-align: left; padding: 0; min-width: 0; }
 .exploration-image { height: 315px; overflow: hidden; border-radius: 16px; position: relative; }
+.exploration-card.green .exploration-image img { width: 100%; height: 100%; object-fit: contain; background: #f4f3f1; }
 .exploration-image .project-placeholder { transition: background .4s; }
 .exploration-card:hover .project-placeholder { background: #ddd; }
 .exploration-info { padding: 23px 2px 0; }
@@ -392,26 +393,23 @@ main:focus { outline: none; }
 .reference-hero .eyebrow { display: block; font: 400 clamp(12px, .94vw, 30px)/1.4 var(--font-sans); letter-spacing: -.02em; color: #737377; margin: 0 0 1.3vw; }
 .reference-hero h1 { font-family: var(--font-sans); font-size: 4.6vw; font-weight: 600; letter-spacing: -.02em; line-height: 1.12; white-space: nowrap; margin: 0 0 1.7vw; color: #111; }
 .reference-hero .hero-description { color: #737377; font-size: clamp(12px, 1.05vw, 34px); font-weight: 400; line-height: 1.65; margin-bottom: 2vw; }
-.reference-hero .button { font-size: clamp(11px, .8vw, 24px); min-height: 0; padding: .8vw 1.5vw; border-radius: 8px; background: #111; gap: 16px; }
+.reference-hero .button { font-size: clamp(16px, 1vw, 28px); font-weight: 500; min-height: 48px; padding: .85vw 1.8vw; border-radius: 8px; background: #000; justify-content: center; text-align: center; gap: 0; }
 .hero-badges { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 .hero-badge { position: absolute; width: var(--badge-w); height: calc(var(--badge-w) * 1.6); transform: rotate(var(--rotation)); transform-origin: 50% 0; }
-.hero-badge-surface { height: 100%; width: 100%; border-radius: .65vw; position: relative; background: #dedede; overflow: hidden; }
+.hero-badge-surface { height: 100%; width: 100%; border-radius: .65vw; position: relative; background: #dedede; overflow: hidden; box-shadow: 1px 2px 0 #8a8e9533, 0 7px 12px -7px #242a3430, 0 22px 32px -18px #242a3436; }
 .hero-badge .project-placeholder { min-height: 0; height: 100%; padding: 0; background: #dedede; }
 .hero-badge .project-placeholder > span:not(.placeholder-mark), .hero-badge .project-placeholder small { display: none; }
 .hero-badge .placeholder-mark { font-size: 1.1vw; color: #a8a8ab; position: absolute; top: 37%; }
-.hero-badge-caption { position: absolute; bottom: 0; left: 0; right: 0; height: 26%; background: #cbcbcd88; padding: .5vw .55vw; display: flex; flex-direction: column; gap: .15vw; color: #717175; }
-.hero-badge-caption > span { font-size: .95vw; letter-spacing: -.02em; line-height: 1.25; white-space: nowrap; }
-.hero-badge-caption small { font: .33vw/1.5 var(--mono); letter-spacing: .03em; }
 .hero-badge-slot { position: absolute; top: .75%; left: 40%; width: 20%; height: 1.3%; border-radius: 10px; background: #f5f5f5; }
 .hero-badge-strap { position: absolute; left: 40%; bottom: 99.5%; width: 20%; height: 26%; background: linear-gradient(to bottom, #f5f5f500, #a3a3a7 75%); z-index: 2; }
-.badge-left-main { --badge-w: 9.3vw; --rotation: -11deg; left: 2%; top: 6.9vw; }
-.badge-left-top { --badge-w: 4.9vw; --rotation: -7deg; left: 23.6%; top: 3.2vw; filter: blur(1.5px); opacity: .65; }
-.badge-right-top { --badge-w: 4.7vw; --rotation: 9deg; left: 67.2%; top: 4.2vw; filter: blur(1px); opacity: .25; }
-.badge-right-main { --badge-w: 9.5vw; --rotation: 8deg; left: 84.2%; top: 6.4vw; }
-.badge-left-edge { --badge-w: 5.2vw; --rotation: -3deg; left: -1.1%; top: 23.7vw; filter: blur(1.7px); opacity: .6; }
-.badge-left-bottom { --badge-w: 7.1vw; --rotation: 8deg; left: 16.1%; top: 21.1vw; }
-.badge-right-bottom { --badge-w: 7.2vw; --rotation: -9deg; left: 73.6%; top: 20.8vw; }
-.badge-right-edge { --badge-w: 5.8vw; --rotation: 4deg; left: 94%; top: 20.5vw; filter: blur(1.6px); opacity: .6; }
+.badge-left-main { --badge-w: 11.4vw; --rotation: -19deg; left: .7%; top: 6.3vw; }
+.badge-left-top { --badge-w: 5.2vw; --rotation: -8deg; left: 23.6%; top: 3.4vw; filter: blur(1.5px); opacity: .65; }
+.badge-right-top { --badge-w: 5vw; --rotation: 10deg; left: 67.2%; top: 3.5vw; filter: blur(1px); opacity: .25; }
+.badge-right-main { --badge-w: 11.4vw; --rotation: 17deg; left: 84%; top: 5.6vw; }
+.badge-left-edge { --badge-w: 5.8vw; --rotation: -6deg; left: -1.5%; top: 23.5vw; filter: blur(1.7px); opacity: .6; }
+.badge-left-bottom { --badge-w: 8.2vw; --rotation: 11deg; left: 15.2%; top: 20.5vw; }
+.badge-right-bottom { --badge-w: 8.2vw; --rotation: -12deg; left: 73.6%; top: 20.4vw; }
+.badge-right-edge { --badge-w: 6.3vw; --rotation: 7deg; left: 94%; top: 20.5vw; filter: blur(1.6px); opacity: .6; }
 .centered-phone-story { position: relative; height: calc(38vw + 110svh); background: #f5f5f5; padding-top: 0; }
 .centered-phone-story .phone-sticky { position: sticky; top: 40px; width: 100%; max-width: none; height: auto; min-height: 0; padding: 0 0 45px; display: flex; flex-direction: column; align-items: center; overflow: visible; --phone-angle: 0deg; --card-angle: 0deg; }
 .centered-phone-story .phone-stage { width: 100%; height: auto; display: flex; justify-content: center; position: relative; transform: none; margin: 0; isolation: isolate; }
@@ -456,19 +454,16 @@ main:focus { outline: none; }
   .reference-hero .eyebrow { font-size: 12px; margin-bottom: 18px; }
   .reference-hero h1 { white-space: normal; font-size: clamp(35px, 8.7vw, 58px); line-height: 1.08; max-width: 520px; margin: 0 auto 23px; text-wrap: balance; }
   .reference-hero .hero-description { font-size: 12px; line-height: 1.9; margin-bottom: 24px; }
-  .reference-hero .button { padding: 12px 19px; font-size: 11px; }
+  .reference-hero .button { padding: 14px 26px; font-size: 16px; }
   .hero-badge-surface { border-radius: 7px; }
-  .hero-badge-caption { padding: 5px 6px; gap: 2px; }
-  .hero-badge-caption > span { font-size: 9px; }
-  .hero-badge-caption small { font-size: 4px; }
   .hero-badge .placeholder-mark { font-size: 15px; }
-  .badge-left-main { --badge-w: 75px; left: -2%; top: 123px; }
+  .badge-left-main { --badge-w: 96px; left: -6%; top: 105px; }
   .badge-left-top { --badge-w: 40px; left: 28%; top: 90px; }
   .badge-right-top { --badge-w: 38px; left: 63%; top: 104px; }
-  .badge-right-main { --badge-w: 74px; left: 83%; top: 136px; }
+  .badge-right-main { --badge-w: 96px; left: 82%; top: 112px; }
   .badge-left-edge { --badge-w: 49px; left: -5%; top: 505px; }
-  .badge-left-bottom { --badge-w: 64px; left: 20%; top: 545px; }
-  .badge-right-bottom { --badge-w: 62px; left: 66%; top: 540px; }
+  .badge-left-bottom { --badge-w: 74px; left: 18%; top: 545px; }
+  .badge-right-bottom { --badge-w: 74px; left: 66%; top: 540px; }
   .badge-right-edge { --badge-w: 47px; left: 94%; top: 490px; }
   .centered-phone-story { height: calc(710px + 80svh); }
   .centered-phone-story .phone-sticky { top: 30px; padding-bottom: 35px; }
@@ -494,11 +489,11 @@ main:focus { outline: none; }
 .phone-screen-dark { position: absolute; inset: 0; background: #000; opacity: var(--wear); }
 .centered-phone-story .phone-speaker, .centered-phone-story .phone-screen-label, .phone-swing, .phone-pagination, .phone-screen-footer { opacity: calc(1 - var(--wear)); }
 .centered-phone-story .phone-speaker { pointer-events: none; }
-.phone-card-window { top: calc(27% - var(--wear) * 8% + var(--pocket-progress) * 67%); height: calc(46% + var(--wear) * 11% - var(--pocket-progress) * 43%); }
+.phone-card-window { top: calc(27% - var(--wear) * 8% + var(--pocket-progress) * 11%); height: calc(46% + var(--wear) * 11% - var(--pocket-progress) * 2%); }
 .phone-card-track { left: calc(18% - var(--wear) * 5% - var(--pocket-progress) * 13%); width: calc(64% + var(--wear) * 10% + var(--pocket-progress) * 26%); }
 .phone-cards-motion { position: absolute; inset: 0; display: block; width: 100%; height: 100%; transform: none; transition: none; transform-origin: 50% calc(var(--device-h) * -.25); animation: worn-badge-sway 3.7s ease-in-out infinite; }
-.phone-preview-card { position: absolute; left: 0; top: 0; width: 100%; height: 100%; transform: translateX(calc(var(--card-offset) * (105% + var(--wear) * 90%))) scale(.9); opacity: calc(1 - var(--wear)); transition: transform .55s cubic-bezier(.22,1,.36,1); }
-.phone-preview-card.is-active { transform: translateX(0) scale(1); opacity: 1; }
+.phone-preview-card { position: absolute; left: 50%; top: 50%; width: min(100%, calc(var(--device-h) * .34)); aspect-ratio: 5 / 8; height: auto; overflow: hidden; border-radius: clamp(18px, calc(var(--device-w) * .061), 48px); background: #d0d0d0; transform: translate(calc(-50% + var(--card-offset) * (105% + var(--wear) * 90%)), -50%) scale(.9); opacity: calc(1 - var(--wear)); transition: transform .55s cubic-bezier(.22,1,.36,1); }
+.phone-preview-card.is-active { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 .phone-card-caption { height: calc(29% + var(--pocket-progress) * 71%); }
 .phone-card-slot { background: #eee; opacity: calc(1 - var(--pocket-progress)); }
 .phone-lanyard { position: absolute; width: 13.56%; height: calc(var(--device-top) + 100px); top: calc(-1 * var(--device-top) - 100px); left: 43.22%; z-index: 7; transform: translateY(calc((1 - var(--strap-progress)) * -110%)); opacity: var(--strap-progress); pointer-events: none; transform-origin: 50% 0; }
@@ -521,9 +516,9 @@ html[data-stage-dark] .home-header .nav-resume { color: #111; background: #fff; 
 
 /* External support and the screen's swinging ribbon are separate elements. */
 .phone-lanyard .lanyard-ribbon:after { display: none; }
-.phone-inner-lanyard { position: absolute; bottom: calc(100% - 3px); height: calc(var(--device-h) * .25); left: 40.35%; width: 19.3%; transform: scaleY(var(--strap-progress)); transform-origin: top; opacity: var(--strap-progress); background: linear-gradient(180deg, #a64b4a, #d56b68 65%, #ec8580); pointer-events: none; z-index: 8; }
+.phone-inner-lanyard { position: absolute; bottom: calc(100% - 3px); height: calc(var(--device-h) * (.25 + var(--pocket-progress) * .05)); left: 40.35%; width: 19.3%; transform: scaleY(max(var(--strap-progress), var(--pocket-progress))); transform-origin: top; opacity: max(var(--strap-progress), var(--pocket-progress)); background: linear-gradient(180deg, #a64b4a, #d56b68 65%, #ec8580); pointer-events: none; z-index: 8; }
 .inner-ribbon-tip { position: absolute; bottom: -2px; left: 0; right: 0; height: 4px; background: #080808; border-radius: 8px; }
-.phone-preview-card { overflow: visible; background: transparent; border-radius: 0; text-align: left; }
+.phone-preview-card { overflow: hidden; border-radius: clamp(18px, calc(var(--device-w) * .061), 48px); text-align: left; }
 .phone-preview-card .profile-card { width: 100%; height: 100%; container-type: inline-size; }
 .phone-preview-card .profile-card__body { height: 100%; padding: 2.7cqw; gap: 2.7cqw; border-radius: 6cqw; }
 .phone-preview-card .profile-card__tile { flex: 1; min-height: 0; aspect-ratio: auto; border-radius: 4.5cqw; }
@@ -709,14 +704,12 @@ html[data-stage-dark] .home-header .nav-resume { color: #111; background: #fff; 
   box-shadow: 0 0 0 1px #a5a6ab, inset 0 0 0 3px #36373d, 0 30px 80px #ffffff06;
 }
 .motion-iphone-screen { position: relative; width: 100%; height: 100%; border: 3px solid #050506; border-radius: 41px; overflow: hidden; background: #66666b; isolation: isolate; touch-action: pan-y; }
-.device-island { position: absolute; width: 24%; height: 3.8%; left: 38%; top: 1.7%; border-radius: 50px; background: #050506; pointer-events: none; }
-.device-island i { position: absolute; right: 11%; top: 24%; height: 50%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 40% 35%,#25314b,#08090d 65%); }
 .device-home-indicator { position: absolute; bottom: 1.2%; width: 34%; height: 4px; left: 33%; background: #ffffffb0; border-radius: 10px; pointer-events: none; }
 .device-volume,.device-power { position: absolute; display: block; width: 3px; background: linear-gradient(90deg,#a6a8ae,#4c4e55); border-radius: 3px; }
 .device-volume { left: -3px; top: 22%; height: 9%; box-shadow: 0 55px #656870; }
 .device-power { right: -3px; top: 30%; height: 12%; }
-.motion-video-slide { position: absolute; inset: 0; animation: video-slide-in .75s cubic-bezier(.16,1,.3,1) both; }
-.motion-video-slide video { width: 100%; height: 100%; display: block; object-fit: contain; background: #0b0b0c; }
+.motion-video-slide { position: absolute; inset: 0; }
+.motion-video-slide video { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; background: #0b0b0c; }
 .motion-video-slide .project-placeholder { width: 100%; height: 100%; min-height: 0; background: #66666b; color: #c8c8cd; gap: 10px; padding: 20px; }
 .motion-video-slide .project-placeholder small { color: #aaaab1; font-size: 9px; }
 .motion-video-slide .project-placeholder > span:not(.placeholder-mark) { font-size: 12px; }
@@ -729,7 +722,6 @@ html[data-stage-dark] .home-header .nav-resume { color: #111; background: #fff; 
 .motion-video-pagination > span { font: 12px var(--mono); color: #eeeef0; }
 .motion-video-pagination i { color: #73737a; font-style: normal; }
 .motion-video-pagination p { color: #a1a1a6; font-size: 12px; margin: 12px 0 0; }
-@keyframes video-slide-in { from { transform: translateX(calc(var(--slide-direction) * 24%)); clip-path: inset(0 0 0 100%); } to { transform: translateX(0); clip-path: inset(0); } }
 @media (max-width: 700px) {
   .motion-device-wrap { --mock-width: min(65vw,310px); width: 100%; margin-top: 70px; }
   .motion-device-wrap > .icon-button { width: 36px; height: 36px; }
@@ -740,7 +732,6 @@ html[data-stage-dark] .home-header .nav-resume { color: #111; background: #fff; 
   .reflective-hanging .reflective-card__header { font-size: 9px; }
   .reflective-hanging .reflective-card__value { font-size: 10px; }
 }
-@media (prefers-reduced-motion: reduce) { .motion-video-slide { animation: none; } }
 
 /* Reference closing: one suspended assembly and a photo-backed translucent label. */
 .reference-contact { background: #007aff; }
@@ -807,3 +798,150 @@ html[data-stage-dark] .home-header .nav-resume { color: #111; background: #fff; 
 @media (prefers-reduced-motion: reduce) {
  .centered-phone-story .story-heading { transition: none; transform: none; }
 }
+
+.reference-hero .button:hover { background: #000; }
+
+/* Laminated badge edges catch light while the artwork remains unobstructed. */
+.hero-badge-surface::after {
+ content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+ border: 1px solid #ffffff65;
+ box-shadow: inset 0 1px 1px #ffffffa6, inset -1px -2px 2px #1b253224;
+ background: linear-gradient(125deg, #ffffff16, transparent 28%, transparent 78%, #ffffff0a);
+}
+.hero-badge-slot { z-index: 2; box-shadow: 0 1px 0 #ffffffbd, inset 0 1px 2px #16233455; }
+.hero-badge-strap {
+ background: repeating-linear-gradient(90deg, #ffffff12 0 1px, #3440520d 1px 2px), linear-gradient(to bottom, transparent, var(--strap-light, #c1c6d2) 35%, var(--strap-color, #66738c) 78%, var(--strap-deep, #455269));
+ mask-image: linear-gradient(transparent, #000 35%);
+ box-shadow: inset 1px 0 #ffffff40, inset -1px 0 #24304b12;
+}
+
+/* Colour-dyed ribbons: pale tips, saturated attachment, fine woven highlights. */
+.badge-left-main { --strap-light: #ffc396; --strap-color: #ed7623; --strap-deep: #b74412; }
+.badge-right-main { --strap-light: #a9dcff; --strap-color: #297ac7; --strap-deep: #175395; }
+.badge-left-top { --strap-light: #ffd1e9; --strap-color: #dc78ad; --strap-deep: #ad528b; }
+.badge-right-top { --strap-light: #d8c8ff; --strap-color: #9872dd; --strap-deep: #64449f; }
+.badge-left-edge { --strap-light: #b2f1d2; --strap-color: #39ab99; --strap-deep: #236d75; }
+.badge-left-bottom { --strap-light: #b8eeef; --strap-color: #57aab7; --strap-deep: #397b94; }
+.badge-right-bottom { --strap-light: #e6b4b0; --strap-color: #af5555; --strap-deep: #813e43; }
+.badge-right-edge { --strap-light: #ffcfb3; --strap-color: #ed9b61; --strap-deep: #c46d51; }
+.phone-preview-card .profile-card__photo { object-position: 50% 42%; }
+
+/* Full-bleed laminated artwork: shared material for hero and phone cards. */
+.hero-badge-surface .profile-card { width: 100%; height: 100%; }
+.hero-badge-surface .profile-card__body,
+.phone-preview-card .profile-card__body {
+ height: 100%; padding: 0; gap: 0; background: transparent;
+ border-radius: inherit; backdrop-filter: none; -webkit-backdrop-filter: none;
+ box-shadow: 0 10px 22px -12px #18233755, 0 2px 4px #18233718;
+}
+.hero-badge-surface .profile-card__tile,
+.phone-preview-card .profile-card__tile {
+ flex: 1; height: 100%; aspect-ratio: auto; border-radius: inherit;
+ box-shadow: inset 0 1px 0 #ffffff80; background: transparent;
+}
+.phone-preview-card .profile-card { border-radius: inherit; overflow: hidden; }
+.hero-badge-surface .profile-card { border-radius: inherit; }
+.hero-badge-surface .profile-card__rim,
+.phone-preview-card .profile-card__rim {
+ box-shadow: inset 0 0 0 1px #ffffff66, inset 0 1px 1px #ffffffa0, inset 0 -1px 1px #15243924;
+}
+.hero-badge-surface .profile-card__glare,
+.phone-preview-card .profile-card__glare { opacity: .18; }
+.hero-badge-surface .profile-card__glare {
+ background: radial-gradient(ellipse at calc(50% + var(--pointer-x, 0) * 35%) calc(30% + var(--pointer-y, 0) * 30%), #ffffff70, transparent 65%);
+}
+.hero-badge-surface::after { background: none; border: 0; box-shadow: none; }
+.phone-preview-card .profile-card__scrim { display: none; }
+.phone-preview-card .profile-card__info {
+ left: 0; right: 0; bottom: 0; padding: 5cqw;
+ color: #24262a; background: #ffffff9c;
+ backdrop-filter: blur(16px) saturate(1.2); -webkit-backdrop-filter: blur(16px) saturate(1.2);
+}
+.phone-preview-card .profile-card__title { color: #42464dcc; }
+.phone-preview-card .profile-card__footer { display: none; }
+.mode-pocket .phone-preview-card .profile-card__tile { display: block; }
+.phone-personal-art { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center; border-radius: inherit; }
+
+/* About: supplied artwork, live experience text, and responsive editorial layout. */
+.about-section.about-editorial {
+ position: relative; isolation: isolate; display: block; width: 100%; max-width: none;
+ margin: 0; padding: 0; border: 0; color: #fff; overflow: hidden;
+ background: radial-gradient(ellipse 90% 38% at 50% 117%, #bd230d 0%, #3d0902 48%, transparent 100%), #000;
+}
+.about-wordmark { position: absolute; top: 7.4%; left: 1.4%; right: 4.5%; pointer-events: none; z-index: -1; }
+.about-wordmark img { width: 100%; opacity: .43; mask-image: linear-gradient(#000, #0002); }
+.about-editorial-content { width: 83%; max-width: 1700px; margin: auto; padding: 5% 0 6.5%; display: grid; grid-template-columns: 40% 60%; }
+.about-profile { min-width: 0; }
+.about-identity { width: 69%; margin: 0 0 13%; line-height: 1; }
+.about-identity img { width: 100%; }
+.about-portrait { width: 56%; overflow: hidden; border-radius: 12%; }
+.about-portrait img { width: 100%; height: auto; display: block; }
+.about-experience { min-width: 0; padding: 8.8% 0 0 7%; }
+.about-experience > h3 { width: 39%; margin: 0 0 5%; line-height: 1; }
+.about-experience-list { display: flex; flex-direction: column; gap: clamp(36px, 4.7vw, 90px); }
+.about-job { display: grid; grid-template-columns: 36px 1fr; gap: 12px; }
+.about-job-dates { color: #ff502b; padding-top: 8px; font-size: 14px; }
+.about-job-dates time { display: flex; flex-direction: column; line-height: 1.15; }
+.about-job-dates small { font-size: .52em; }
+.about-job-dates span { font-size: 1.1em; }
+.about-job-dates i { display: block; width: 24px; height: 1px; margin: 7px 0; background: #ddd; transform: rotate(-17deg); }
+.about-job-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 5px; }
+.about-job-heading h4 { color: #ff502b; font-weight: 500; font-size: clamp(15px, 1.25vw, 25px); line-height: 1.4; margin: 0; }
+.about-job-heading img { width: clamp(85px, 8vw, 155px); margin: -10px -15px; }
+.about-job-copy p { color: #969696; font-size: clamp(13px, 1.15vw, 23px); line-height: 1.6; margin: 7px 0 0; }
+.about-editorial-footer { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 3%; margin-top: 4.5%; }
+.about-contact-strip { width: 56%; position: relative; flex-shrink: 0; }
+.about-contact-strip img { width: 100%; }
+.about-contact-strip button, .about-contact-strip a { position: absolute; top: -8px; bottom: -8px; background: none; border-radius: 8px; }
+.about-wechat-hit { left: 0; width: 44%; }
+.about-email-hit { right: 0; width: 52%; }
+.about-skills { width: 43%; height: auto; }
+@media (min-width: 1700px) { .about-job-dates { font-size: 25px; } .about-job { grid-template-columns: 38px 1fr; } }
+@media (min-width: 701px) and (max-width: 1100px) {
+ .about-editorial-content { width: 88%; grid-template-columns: 35% 65%; padding-bottom: 8%; }
+ .about-identity { width: 90%; margin-bottom: 24%; }
+ .about-portrait { width: 80%; }
+ .about-experience { padding-left: 5%; }
+ .about-experience > h3 { width: 55%; }
+ .about-job { grid-template-columns: 27px 1fr; gap: 9px; }
+ .about-job-heading img { width: 90px; }
+}
+@media (max-width: 700px) {
+ .about-editorial-content { width: 88%; padding: 55px 0 64px; display: flex; flex-direction: column; }
+ .about-wordmark { top: 25px; left: -4%; right: -4%; }
+ .about-profile { display: flex; align-items: center; justify-content: space-between; gap: 6%; }
+ .about-identity { width: 57%; margin: 0; }
+ .about-portrait { width: 34%; border-radius: 18px; }
+ .about-experience { padding: 44px 0 0; }
+ .about-experience > h3 { width: 230px; max-width: 72%; margin-bottom: 24px; }
+ .about-experience-list { gap: 30px; }
+ .about-job { grid-template-columns: 30px 1fr; gap: 9px; }
+ .about-job-dates { font-size: 19px; }
+ .about-job-heading h4 { font-size: 16px; }
+ .about-job-copy p { font-size: 13px; line-height: 1.8; }
+ .about-editorial-footer { flex-direction: column; gap: 20px; margin-top: 36px; }
+ .about-contact-strip { width: 100%; }
+ .about-skills { width: 100%; }
+}
+
+.about-editorial img { height: auto; }
+
+/* Artwork includes its own typography; show the full card without parallax cropping. */
+.phone-preview-card .profile-card__photo { inset: 0; width: 100%; height: 100%; object-fit: contain; transform: none; }
+.phone-preview-card .profile-card { border-radius: inherit; }
+.phone-art-contact { position: absolute; right: 7%; bottom: 4.5%; width: 27%; height: 7%; background: transparent; border-radius: 10px; z-index: 5; }
+.phone-art-contact:hover { box-shadow: 0 0 0 1px #ffffff66, 0 3px 12px #fff2; }
+.about-contact-strip { display: flex; align-items: center; gap: 6%; }
+.about-contact-action { position: relative !important; inset: auto !important; display: block; padding: 0; background: transparent; border-radius: 8px; transition: transform .35s cubic-bezier(.22,1,.36,1), filter .35s; }
+.about-contact-action:first-child { width: 44%; }
+.about-contact-action:last-child { width: 52%; }
+.about-skills { display: flex; align-items: center; }
+.about-skill-action { display: block; width: 33.333%; position: relative; border-radius: 18px; transition: transform .4s cubic-bezier(.22,1,.36,1), filter .4s; }
+.about-skill-action img { display: block; width: 100%; }
+@media (hover: hover) {
+ .about-skill-action:hover { transform: translateY(-4px); filter: brightness(1.15) drop-shadow(0 8px 12px #ef562323); }
+ .about-contact-action:hover { transform: translateY(-2px); filter: brightness(1.15); }
+}
+.about-skill-action:active, .about-contact-action:active { transform: translateY(1px) scale(.98); transition-duration: .12s; }
+.about-skill-action:focus-visible, .about-contact-action:focus-visible { outline: 2px solid #ff7958; outline-offset: -6px; }
+@media (prefers-reduced-motion: reduce) { .about-skill-action, .about-contact-action { transition: none; } .about-skill-action:hover, .about-contact-action:hover { transform: none; } }

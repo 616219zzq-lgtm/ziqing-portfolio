@@ -1,7 +1,22 @@
-// 所有项目素材先留空。收到素材后，只需填入 public/assets 下的路径。
+// 首页吊牌素材与案例封面独立配置；null 保留灰色占位。
+export const heroMedia = {
+  xiaohuasheng: '/assets/projects/xiaohuasheng-cover.png',
+  flarewild: '/assets/projects/flarewild-cover.png',
+  everydayIdeas: '/assets/hero/everyday-ideas.webp',
+  connect: '/assets/hero/connect.webp',
+  designExploration: '/assets/hero/design-exploration.webp',
+  curiosity: '/assets/hero/curiosity.webp',
+  visualStories: '/assets/hero/visual-stories-gradient.webp',
+  moreToCome: '/assets/hero/warm-gradient.webp',
+};
+export const phonePortrait = '/assets/phone/portrait.webp';
+export const explorationCovers = {
+  touchMemory: '/assets/explorations/touch-memory-cover.png',
+  more: '/assets/projects/more-explorations-cover.png',
+};
 export const media = {
-  xiaohuasheng: { cover: null, chapters: {} },
-  flarewild: { cover: null, video: null, poster: null, chapters: {} },
+  xiaohuasheng: { cover: '/assets/projects/xiaohuasheng-cover.png', chapters: {} },
+  flarewild: { cover: '/assets/projects/flarewild-cover.png', video: null, poster: null, chapters: {} },
 };
 export const profile = {
   name: '张紫晴', english: 'Ziqing Zhang', role: '体验设计 / UI 设计',
@@ -37,12 +52,13 @@ export const projects = [
 ];
 export const explorations = [
   { name: '触忆', english: 'TOUCH MEMORY', image: null, text: '将回忆转化为可感知的体验，探索多模态 AI 与软硬件交互。', tags: '智能交互 / 软硬件体验', alt: '触忆项目封面', tone: 'warm' },
-  { name: '乡音 · 方言交互', english: 'LOCAL VOICES', image: null, text: '围绕无锡南长街大窑路智新坊，探索方言的参与式表达。', tags: '在地文化 / 参与式体验', alt: '乡音项目封面', tone: 'green' },
+  { name: '乡音 · 方言交互', english: 'LOCAL VOICES', image: '/assets/explorations/local-voice-cover.png', href: 'https://616219zzq-lgtm.github.io/', text: '围绕无锡南长街大窑路智新坊，探索方言的参与式表达。', tags: '在地文化 / 参与式体验', alt: '乡音项目封面', tone: 'green' },
 ];
 
-// 收到动效视频后，将 src / poster 换成 public/assets 下的路径；可继续增加条目。
+// 首页 FlareWild 道具互动的视频播放顺序。
 export const motionClips = [
-  { id: 'motion-01', title: '道具互动 · 动效 01', src: null, poster: null },
-  { id: 'motion-02', title: '道具互动 · 动效 02', src: null, poster: null },
-  { id: 'motion-03', title: '道具互动 · 动效 03', src: null, poster: null },
+  { id: 'overview', title: '概况', src: '/assets/flarewild/videos/overview.mp4', poster: null },
+  { id: 'treasure-chest', title: '开宝箱', src: '/assets/flarewild/videos/treasure-chest.mp4', poster: null },
+  { id: 'interactive-props', title: '互动道具', src: '/assets/flarewild/videos/interactive-props.mp4', poster: null },
+  { id: 'broadcast-props', title: '公放道具', src: '/assets/flarewild/videos/broadcast-props.mp4', poster: null },
 ];

@@ -67,7 +67,7 @@ export function usePortfolioMotion(path) {
       buildSection('#work', '.project-arrival', '.section-heading>p');
       buildSection('.motion-section', '.motion-device-wrap', '.motion-heading>p,.motion-heading>.text-link');
       buildSection('#explorations', '.exploration-card', '.explore-heading .eyebrow,.explore-heading>span');
-      buildSection('#about', '.accordion details', '.about-intro>p,.about-intro>.location,.about-intro>.text-link');
+      buildSection('#about', '.about-portrait,.about-job,.about-editorial-footer', '.about-identity,.about-experience>h3');
       const contact = document.querySelector('.reference-contact');
       if (contact) {
         const copy = contact.querySelector('.contact-copy');

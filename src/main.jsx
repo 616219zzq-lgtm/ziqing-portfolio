@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, RotateCw, Download, Copy, Check, Menu, X, Plus, MapPin, Smartphone, Signal, Battery } from 'lucide-react';
-import { profile, projects, explorations, media, motionClips } from './content';
+import { profile, projects, explorations, media, motionClips, heroMedia, phonePortrait, explorationCovers } from './content';
 import ProfileCard from './components/ProfileCard';
 import ClosingBadge from './components/ClosingBadge';
 import GalleryTilt from './components/GalleryTilt';
@@ -110,20 +110,20 @@ function Hero() {
     return()=>{cancelAnimationFrame(frame);observer.disconnect();window.removeEventListener('pointermove',move);window.removeEventListener('scroll',scroll);window.removeEventListener('resize',resize);quiet.removeEventListener('change',reset);};
   },[]);
   const badges = [
-    {position:'left-main',label:'小花生',subtitle:'UI / UX DESIGN',src:media.xiaohuasheng.cover},
-    {position:'left-top',label:'Design exploration',subtitle:'SELECTED WORK'},
-    {position:'right-top',label:'A little curiosity',subtitle:'DESIGN NOTES'},
-    {position:'right-main',label:'FlareWild',subtitle:'EXPERIENCE DESIGN',src:media.flarewild.cover},
-    {position:'left-edge',label:'Visual stories',subtitle:'EXPLORATION'},
-    {position:'left-bottom',label:'Everyday ideas',subtitle:'INTERACTION DESIGN'},
-    {position:'right-bottom',label:'Let’s connect',subtitle:'SAY HELLO'},
-    {position:'right-edge',label:'More to come',subtitle:'WORK IN PROGRESS'},
+    {position:'left-main',label:'小花生',subtitle:'UI / UX DESIGN',src:heroMedia.xiaohuasheng},
+    {position:'left-top',label:'Design exploration',subtitle:'SELECTED WORK',src:heroMedia.designExploration},
+    {position:'right-top',label:'A little curiosity',subtitle:'DESIGN NOTES',src:heroMedia.curiosity},
+    {position:'right-main',label:'FlareWild',subtitle:'EXPERIENCE DESIGN',src:heroMedia.flarewild},
+    {position:'left-edge',label:'Visual stories',subtitle:'EXPLORATION',src:heroMedia.visualStories},
+    {position:'left-bottom',label:'Everyday ideas',subtitle:'INTERACTION DESIGN',src:heroMedia.everydayIdeas},
+    {position:'right-bottom',label:'Let’s connect',subtitle:'SAY HELLO',src:heroMedia.connect},
+    {position:'right-edge',label:'More to come',subtitle:'WORK IN PROGRESS',src:heroMedia.moreToCome},
   ];
   return <section ref={hero} className="hero-section reference-hero" aria-labelledby="hero-title">
     <div className="hero-badges" aria-label="八张作品吊牌">{badges.map((badge,i)=><div className={'hero-badge badge-'+badge.position} key={badge.position} style={{'--drift-duration':(6+i%4*1.3)+'s','--drift-delay':(-i*1.7)+'s','--depth':i%3===0?1:.55}}>
-      <div className="hero-badge-strap"/><div className="hero-badge-surface"><ProjectMedia src={badge.src} alt={'作品吊牌 '+(i+1)}/><div className="hero-badge-caption"><span>{badge.label}</span><small>{badge.subtitle}</small></div><i className="hero-badge-slot"/></div>
+      <div className="hero-badge-strap"/><div className="hero-badge-surface"><ProfileCard name="" title="" avatarUrl={withBase(badge.src)} holo={0.8} glare={0.5} parallax={0} radius={16} enableTilt={false} intro={false} showUserInfo={false} theme="light"/><i className="hero-badge-slot"/></div>
     </div>)}</div>
-    <div className="hero-copy"><p className="eyebrow">Experience &amp; UI Designer</p><h1 id="hero-title" aria-label="Turn ideas into experiences.">{['Turn ideas','into','experiences.'].map(word=><span className="title-mask" key={word}><span className="title-line">{word}</span></span>)}</h1><p className="hero-description">你好，我是张紫晴。<br/>从用户行为出发，创造可感知的连接。</p><a href={withBase('/#work')} className="button button-dark">查看精选项目<ArrowDown size={16}/></a></div>
+    <div className="hero-copy"><p className="eyebrow">Experience &amp; UI Designer</p><h1 id="hero-title" aria-label="Turn ideas into experiences.">{['Turn ideas','into','experiences.'].map(word=><span className="title-mask" key={word}><span className="title-line">{word}</span></span>)}</h1><p className="hero-description">你好，我是张紫晴。<br/>喜欢把观察转化为想法，<br/>也愿意和产品、开发一起，让想法落地。</p><a href={withBase('/#work')} className="button button-dark">查看精选项目</a></div>
   </section>;
 }
 
@@ -176,7 +176,7 @@ function PhoneStory() {
       <button className="phone-swing" onClick={()=>setSwing(n=>n+1)} tabIndex={wearing?-1:0} aria-hidden={wearing} aria-label="轻摇手机卡片"><Smartphone size={10}/>Swing</button>
       <div className="phone-card-window" onClickCapture={e=>{if(swiped.current){e.preventDefault();e.stopPropagation();swiped.current=false;}}} onPointerDown={e=>{if(wearing)return;swiped.current=false;gesture.current=e.clientX;}} onPointerUp={e=>{if(gesture.current!==null){const dx=e.clientX-gesture.current;swiped.current=Math.abs(dx)>12;if(Math.abs(dx)>30)setActive(n=>clamp(n+(dx<0?1:-1),0,2));}gesture.current=null;}} onPointerCancel={()=>{gesture.current=null;}}>
         <div className="phone-card-track"><div className={'phone-cards-motion '+(swing?'is-swinging':'')} key={swing}><div className="phone-inner-lanyard" aria-hidden="true"><div className="inner-ribbon-tip"/></div>{cards.map((label,i)=><div className={'phone-preview-card '+(active===i?'is-active':'')} style={{'--card-offset':i-active}} key={label} onClick={e=>{if(!wearing&&!e.target.closest('button,a'))setActive(i);}} onKeyDown={e=>{if(e.target===e.currentTarget&&(e.key==='Enter'||e.key===' ')){e.preventDefault();setActive(i);}}} tabIndex={!wearing&&active===i?0:-1} role="group" aria-hidden={wearing&&active!==i} aria-label={label+(active===i?'，当前卡片':'')} inert={wearing&&active!==i}>
-          <ProfileCard name={profile.name} title={profile.role} handle="ziqing" status="欢迎交流" contactText="联系我" avatarUrl={profile.portrait || ''} contactTabIndex={active===i?0:-1} holo={0.8} glare={0.5} tiltStrength={12} parallax={8} radius={16} enableTilt={!wearing} intro={false} showUserInfo enableMobileTilt={false} theme="dark" onContactClick={()=>{document.getElementById('contact')?.scrollIntoView({behavior:reduceMotion()?'instant':'smooth'});}}/>
+          {i===1 ? <img className="phone-personal-art" src={withBase('/assets/phone/personal-card.png')} alt="张紫晴，体验设计 / UI设计" draggable="false"/> : <ProfileCard name="" title="" handle="ziqing" status="欢迎交流" contactText="联系我" avatarUrl={withBase(['/assets/phone/reading-card.webp','','/assets/phone/flarewild-card.webp'][i])} contactTabIndex={active===i?0:-1} holo={0.8} glare={0.5} tiltStrength={12} parallax={8} radius={16} enableTilt={!wearing} intro={false} showUserInfo={false} enableMobileTilt={false} theme="dark" onContactClick={()=>{document.getElementById('contact')?.scrollIntoView({behavior:reduceMotion()?'instant':'smooth'});}}/>}
         </div>)}</div></div>
       </div>
       <div className="phone-pagination" aria-label="手机卡片切换" inert={wearing} aria-hidden={wearing}>{cards.map((label,i)=><button key={label} className={active===i?'current':''} aria-label={'切换到'+label} aria-pressed={active===i} onClick={()=>setActive(i)}/>)}</div><span className="phone-screen-footer">ZIQING ZHANG · PORTFOLIO</span>
@@ -188,7 +188,7 @@ function PhoneStory() {
 
 function Gallery({ navigate }) {
   const cards=[...projects,{id:'explorations',number:'03',name:'更多探索',category:'设计实验 · 创意探索',title:'新的想法，慢慢展开。',summary:'新的想法，慢慢展开。项目素材将在这里陆续更新。',contribution:'探索交互、视觉与有趣的表达方式。',tags:['设计探索']}];
-  const [selected,setSelected]=useState(1),[flipped,setFlipped]=useState([false,false,false]);
+  const [selected,setSelected]=useState(0),[flipped,setFlipped]=useState([false,false,false]);
   const [scale,setScale]=useState(1.08),[dragOffset,setDragOffset]=useState(0),[dragging,setDragging]=useState(false);
   const gallery=useRef(null),gesture=useRef(null),dragged=useRef(false),dragFrame=useRef(0);
   useEffect(()=>{
@@ -197,7 +197,8 @@ function Gallery({ navigate }) {
     return()=>{observer.disconnect();cancelAnimationFrame(dragFrame.current);};
   },[]);
   const spacing=314.8*scale;
-  const select=i=>{setSelected(clamp(i,0,cards.length-1));setFlipped([false,false,false]);};
+  const wrap=i=>(i%cards.length+cards.length)%cards.length;
+  const select=i=>{setSelected(wrap(i));setFlipped([false,false,false]);};
   const flip=i=>{
     const next=!flipped[i];
     setFlipped(f=>f.map((v,j)=>j===i?next:v));
@@ -219,17 +220,17 @@ function Gallery({ navigate }) {
     <div ref={gallery} className={'gallery'+(dragging?' is-dragging':'')} style={{'--badge-scale':scale,'--card-w':320*scale+'px','--card-h':505*scale+'px','--card-radius':24*scale+'px'}} role="region" aria-roledescription="轮播" aria-label="精选项目画廊，可用左右方向键切换" tabIndex={0}
       onKeyDown={e=>{if(e.target!==e.currentTarget)return;if(e.key==='ArrowRight'){e.preventDefault();select(selected+1);}if(e.key==='ArrowLeft'){e.preventDefault();select(selected-1);}}}
       onPointerDown={e=>{if(e.pointerType==='mouse'&&e.button!==0)return;dragged.current=false;if(e.target.closest('button,a'))return;gesture.current={x:e.clientX,y:e.clientY,time:performance.now(),dragging:false};}}
-      onPointerMove={e=>{const start=gesture.current;if(!start)return;const dx=e.clientX-start.x,dy=e.clientY-start.y;if(!start.dragging&&Math.abs(dx)>6&&Math.abs(dx)>Math.abs(dy)*1.4){start.dragging=true;setDragging(true);gallery.current.setPointerCapture(e.pointerId);}if(start.dragging){cancelAnimationFrame(dragFrame.current);const bounded=(selected===0&&dx>0)||(selected===cards.length-1&&dx<0)?dx*.25:dx;dragFrame.current=requestAnimationFrame(()=>setDragOffset(clamp(bounded,-spacing,spacing)));}}}
+      onPointerMove={e=>{const start=gesture.current;if(!start)return;const dx=e.clientX-start.x,dy=e.clientY-start.y;if(!start.dragging&&Math.abs(dx)>6&&Math.abs(dx)>Math.abs(dy)*1.4){start.dragging=true;setDragging(true);gallery.current.setPointerCapture(e.pointerId);}if(start.dragging){cancelAnimationFrame(dragFrame.current);dragFrame.current=requestAnimationFrame(()=>setDragOffset(clamp(dx,-spacing,spacing)));}}}
       onPointerUp={endGesture} onPointerCancel={()=>{dragged.current=true;resetDrag();}}
       onLostPointerCapture={e=>{if(e.target===e.currentTarget&&gesture.current)resetDrag();}}>
       <div className="gallery-track">{cards.map((p,i)=>{
-        const position=i-selected+dragOffset/spacing, distance=Math.min(Math.abs(position),1);
-        const opacity=Math.abs(position)<=1?1-.25*distance:Math.max(0,.75*(2-Math.abs(position)));
+        const position=(((i-selected+cards.length+1)%cards.length)-1)+dragOffset/spacing, distance=Math.min(Math.abs(position),1);
+        const opacity=1-.25*distance;
         const transform='perspective('+1100*scale+'px) translateX('+position*spacing+'px) rotateY('+-14*clamp(position,-1,1)+'deg) scale('+(1-.12*distance)+')';
-        return <article key={p.id} className={'project-slot '+(i===selected?'selected':'adjacent')+' slot-'+i} style={{transform,opacity,zIndex:10-Math.round(2*Math.abs(position))}} aria-label={p.name+(i===selected?'，当前项目':'')} inert={Math.abs(position)>=1.99} aria-hidden={Math.abs(position)>=1.99} onClick={()=>{if(!dragged.current&&i!==selected)select(i);}}>
+        return <article key={p.id} className={'project-slot '+(i===selected?'selected':'adjacent')+' slot-'+i} style={{transform,opacity,zIndex:10-Math.round(2*Math.abs(position))}} aria-label={p.name+(i===selected?'，当前项目':'')} inert={Math.abs(position)>=1.99} aria-hidden={Math.abs(position)>=1.99} onClick={e=>{if(dragged.current||e.target.closest('button,a'))return;if(i!==selected)select(i);}}>
           <div className="project-arrival"><GalleryTilt disabled={dragging}><div className={'project-card '+(flipped[i]?'is-flipped':'')}>
             <div className="project-face project-front" inert={flipped[i]} aria-hidden={flipped[i]}>
-              <div className="project-cover">{i===0?<PeanutArt/>:i===1?<MapArt/>:<ProjectPlaceholder label="探索素材"/>}</div><i className="project-badge-slot"/>
+              <div className="project-cover">{i===0?<PeanutArt/>:i===1?<MapArt/>:<ProjectMedia src={explorationCovers.more} alt="更多探索 · 项目封面"/>}</div><i className="project-badge-slot"/>
               <div className="project-card-copy"><h3>{p.name}</h3><p>{p.category}</p><div className="gallery-card-actions">
                 <button className="card-flip" onClick={e=>{e.stopPropagation();if(dragged.current)return;if(i!==selected){select(i);return;}flip(i);}} aria-label={'翻面查看'+p.name+'速览'}><RotateCw size={16}/></button>
                 <a className="gallery-case-link" href={p.id==='explorations'?'#explorations':withBase(casePath(p.id))} onClick={e=>{if(p.id==='explorations'){e.stopPropagation();if(dragged.current)e.preventDefault();}else open(e,p.id);}}>{p.id==='explorations'?'查看探索':'查看案例'}<ArrowUpRight size={14}/></a>
@@ -269,31 +270,53 @@ function MotionClip({ clip }) {
 }
 
 function MotionSpotlight() {
-  const [active,setActive]=useState(0),[direction,setDirection]=useState(1);
+  const [active,setActive]=useState(0);
   const gesture=useRef(null);
   const clips=motionClips.length?motionClips:[{id:'motion-01',title:'道具互动 · 动效 01',src:null}];
-  const select=delta=>{setDirection(delta);setActive(i=>(i+delta+clips.length)%clips.length);};
+  const select=delta=>setActive(i=>(i+delta+clips.length)%clips.length);
   const clip={...clips[active],src:clips[active].src||(active===0?media.flarewild.video:null)};
   return <section id="motion" className="motion-section reference-motion" aria-labelledby="motion-title"><div className="motion-heading"><p className="eyebrow">MOTION DESIGN</p><MotionTitle id="motion-title">FlareWild <span className="motion-title-muted">道具互动</span></MotionTitle><p>用道具创造互动，用动效回应参与。<br/>从拾取、使用到反馈，让每一次互动都被感知。</p></div>
     <div className="motion-device-wrap" role="region" aria-label="FlareWild 动效视频，可用左右方向键切换" tabIndex={0} onKeyDown={e=>{if(e.target!==e.currentTarget)return;if(e.key==='ArrowLeft'){e.preventDefault();select(-1);}if(e.key==='ArrowRight'){e.preventDefault();select(1);}}}>
       <button className="motion-video-prev icon-button" onClick={()=>select(-1)} disabled={clips.length<2} aria-label="上一个动效视频"><ChevronLeft/></button>
-      <div className="motion-iphone" data-device="iphone-18-pro" aria-label="iPhone 18 风格手机视频模型"><i className="device-volume" aria-hidden="true"/><i className="device-power" aria-hidden="true"/><div className="motion-iphone-screen" onPointerDown={e=>{gesture.current={x:e.clientX,y:e.clientY};}} onPointerUp={e=>{if(!gesture.current)return;const dx=e.clientX-gesture.current.x,dy=e.clientY-gesture.current.y;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.5)select(dx<0?1:-1);gesture.current=null;}} onPointerCancel={()=>{gesture.current=null;}}><div key={clip.id} className="motion-video-slide" style={{'--slide-direction':direction}}><MotionClip clip={clip}/></div><div className="device-island" aria-hidden="true"><i/></div><i className="device-home-indicator" aria-hidden="true"/></div></div>
+      <div className="motion-iphone" data-device="iphone-18-pro" aria-label="iPhone 18 风格手机视频模型"><i className="device-volume" aria-hidden="true"/><i className="device-power" aria-hidden="true"/><div className="motion-iphone-screen" onPointerDown={e=>{gesture.current={x:e.clientX,y:e.clientY};}} onPointerUp={e=>{if(!gesture.current)return;const dx=e.clientX-gesture.current.x,dy=e.clientY-gesture.current.y;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.5)select(dx<0?1:-1);gesture.current=null;}} onPointerCancel={()=>{gesture.current=null;}}><div key={clip.id} className="motion-video-slide"><MotionClip clip={clip}/></div><i className="device-home-indicator" aria-hidden="true"/></div></div>
       <button className="motion-video-next icon-button" onClick={()=>select(1)} disabled={clips.length<2} aria-label="下一个动效视频"><ChevronRight/></button>
       <div className="motion-video-pagination" aria-live="polite"><span>{String(active+1).padStart(2,'0')} <i>/ {String(clips.length).padStart(2,'0')}</i></span><p>{clip.title}</p></div>
     </div><p className="motion-footnote">从互动玩法到视觉反馈，<br/>探索动效如何成为体验的一部分。</p></section>;
 }
 
 function Explorations({ openPreview }) {
-  return <section id="explorations" className="explorations-section"><div className="explore-heading"><div><p className="eyebrow">OFF THE MAIN PATH</p><MotionTitle>Beyond the screen.</MotionTitle></div><span>一些在界面之外，<br/>也在体验之中的探索。</span></div><div className="explorations-grid">{explorations.map((p,i)=><button className={'exploration-card '+p.tone} key={p.name} onClick={()=>openPreview(p)} aria-label={'查看'+p.name+'项目简介'}><div className="exploration-image"><ProjectMedia src={p.image} alt={p.name+' · 项目封面'}/></div><div className="exploration-info"><span className="tiny-code">0{i+1} / {p.english}</span><h3>{p.name}<ArrowUpRight size={23}/></h3><p>{p.text}</p><span className="exploration-tags">{p.tags}</span></div></button>)}</div></section>;
+  return <section id="explorations" className="explorations-section"><div className="explore-heading"><div><p className="eyebrow">OFF THE MAIN PATH</p><MotionTitle>Beyond the screen.</MotionTitle></div><span>一些在界面之外，<br/>也在体验之中的探索。</span></div><div className="explorations-grid">{explorations.map((p,i)=>{const content=<><div className="exploration-image"><GalleryTilt><ProjectMedia src={p.image} alt={p.name+' · 项目封面'}/></GalleryTilt></div><div className="exploration-info"><span className="tiny-code">0{i+1} / {p.english}</span><h3>{p.name}<ArrowUpRight size={23}/></h3><p>{p.text}</p><span className="exploration-tags">{p.tags}</span></div></>;return p.href?<a className={'exploration-card '+p.tone} key={p.name} href={p.href} target="_blank" rel="noreferrer" aria-label={'打开'+p.name+'网站'}>{content}</a>:<button className={'exploration-card '+p.tone} key={p.name} onClick={()=>openPreview(p)} aria-label={'查看'+p.name+'项目简介'}>{content}</button>;})}</div></section>;
 }
 
-function About() {
-  const items=[
-    ['我如何理解和推进设计',<><p>从业务目标和用户行为出发，先让用户顺畅完成核心任务，再用创意和趣味为体验加分。当创意影响核心体验时，我会调整方案，并通过测试寻找平衡。</p><div className="ability-row">理解问题<span>用户反馈 / 需求洞察 / 用户旅程</span></div><div className="ability-row">设计体验<span>信息架构 / 核心交互 / UI / 个性化策略</span></div><div className="ability-row">表达与推进<span>视觉 / 动效 / Figma / AI / 可交互原型</span></div></>],
-    ['教育与实习经历',<><div className="timeline-item"><span>2026.06 — 至今</span><strong>江南大学 · 设计 研究生</strong></div><div className="timeline-item"><span>2022.09 — 2026.06</span><strong>江南大学 · 数字媒体艺术 本科</strong><p>GPA 3.8 · 本校保研 · 多次获校综合二等奖学金</p></div><div className="timeline-item"><span>2025.06 — 2026.03</span><strong>上海慧力信息技术有限公司 · UI/UX 设计</strong><p>小花生亲子阅读平台：用户反馈、界面与交互、原型验证。</p></div><div className="timeline-item"><span>2025.03 — 2026.09</span><strong>Vortex Force · 体验设计</strong><p>FlareWild：地图社交、互动道具、动效与商业化功能。</p></div></>],
-    ['关于工具，也关于好奇心',<><p>我关注视觉表达，也关心方案能否被理解、被使用和被实现。生成式 AI 与 Vibe Coding 帮助我更快地将想法带入可讨论、可体验的状态。</p><p>从多模态 AI 到软硬件原型，从数字回忆到在地方言，我习惯通过制作理解问题，在真实的互动中检验想法。</p></>],
+function About({ copy }) {
+  const asset=name=>withBase('/assets/about/'+name+'.webp');
+  const experience=[
+    {start:['2025','06'],end:['2026','03'],company:'上海慧力信息技术有限公司',body:'参与小花生亲子阅读教育平台AI全链路的体验升级，围绕核心问题，完成用户研究、需求洞察、核心流程及高保真设计。项目中熟练使用 Figma 进行交互与视觉设计，并结合生成式 AI 完成多方案探索，通过 Codex快速搭建可交互Demo，形成AI工作流，提升方案探索与验证效率。'},
+    {start:['2026','03'],end:['2026','09'],company:'无锡旋涡动力Vortex Force',body:'参与 FlareWild 海外地图社交 App 从 0 到 1 设计，核心产出涵盖地图社交、虚拟互动道具及商业化功能，完成 50+ 低保真原型与 30+ 高保真页面。积累 C 端社交产品交互、信息架构及海外用户体验设计能力，并参与 AI 内容冷启动实验，提升对社区增长与 AI 辅助设计的理解。'},
   ];
-  return <section id="about" className="about-section"><div className="about-intro"><p className="eyebrow">THE PERSON BEHIND THE PIXELS</p><MotionTitle>Curiosity,<br/>always.</MotionTitle><p>我是张紫晴，江南大学设计专业在读研究生。<br/>喜欢把观察转化为想法，<br/>也愿意和产品、开发一起，让想法落地。</p><span className="location"><MapPin size={14}/>常驻无锡 · 意向上海、杭州</span><a className="text-link" href={profile.resume} download="张紫晴-体验设计简历.pdf">更完整的我，在简历里<Download size={16}/></a></div><div className="accordion">{items.map(([title,body],i)=><details key={title} open={i===0?true:undefined}><summary><span className="faq-no">0{i+1}</span><span>{title}</span><Plus size={19}/></summary><div className="accordion-content">{body}</div></details>)}</div></section>;
+  return <section id="about" className="about-section about-editorial" aria-label="关于张紫晴">
+    <div className="about-wordmark" aria-hidden="true"><img src={asset('wordmark')} width={3615} height={447} alt=""/></div>
+    <div className="about-editorial-content">
+      <div className="about-profile">
+        <h2 className="about-identity"><img src={asset('identity')} width={869} height={442} alt="张紫晴 Zoey · 江南大学 设计研究生" loading="lazy"/></h2>
+        <div className="about-portrait"><img src={asset('portrait')} width={706} height={880} alt="张紫晴的个人照片" loading="lazy"/></div>
+      </div>
+      <div className="about-experience">
+        <h3><img src={asset('experience')} width={666} height={79} alt="实习经历 Experience" loading="lazy"/></h3>
+        <div className="about-experience-list">{experience.map(item=><article className="about-job" key={item.company}>
+          <div className="about-job-dates" aria-label={item.start.join('.')+' — '+item.end.join('.')}><time><small>{item.start[0]}</small><span>{item.start[1]}</span></time><i aria-hidden="true"/><time><small>{item.end[0]}</small><span>{item.end[1]}</span></time></div>
+          <div className="about-job-copy"><div className="about-job-heading"><h4>{item.company}</h4><img src={asset('product-pill')} width={310} height={162} alt="C端产品" loading="lazy"/></div><p>{item.body}</p></div>
+        </article>)}</div>
+      </div>
+      <div className="about-editorial-footer">
+        <div className="about-contact-strip">
+          <button className="about-contact-action" onClick={()=>copy(profile.wechat,'微信号')} aria-label="复制微信号"><img src={asset('wechat')} width={780} height={92} alt="WeChat:z13673185526" loading="lazy"/></button>
+          <a className="about-contact-action" href={'mailto:'+profile.email} aria-label="发送邮件"><img src={asset('email')} width={916} height={92} alt="E-mail:3551194747@qq.com" loading="lazy"/></a>
+        </div>
+        <div className="about-skills">{[['motion','动效设计','motion'],['ai','AI工作流','explorations'],['experience','体验设计','work']].map(([assetName,label,target])=><a className="about-skill-action" key={assetName} href={'#'+target} aria-label={'查看'+label}><img src={asset('skill-'+assetName)} width={471} height={264} alt={label} loading="lazy"/></a>)}</div>
+      </div>
+    </div>
+  </section>;
 }
 
 function Contact({ copy }) {
@@ -302,7 +325,7 @@ function Contact({ copy }) {
 
 function CaseSectionVisual({ projectId, index, title, type }) {
   if (projectId==='flarewild' && type==='demo') return <VideoSlot/>;
-  return <div className="chapter-media"><ProjectMedia src={media[projectId]?.chapters[index]} alt={title+' · 设计过程'}/></div>;
+  return <div className="chapter-media"><GalleryTilt><ProjectMedia src={media[projectId]?.chapters[index]} alt={title+' · 设计过程'}/></GalleryTilt></div>;
 }
 
 function CasePage({project,navigate}) {
@@ -369,7 +392,7 @@ function App(){
   const copy=async(value,label)=>{clearTimeout(timer.current);try{await navigator.clipboard.writeText(value);setToast(`${label}已复制`);}catch{setToast(`请手动复制${label}：${value}`);}timer.current=setTimeout(()=>setToast(null),4200);};
   usePortfolioMotion(path);
   const project=projects.find(p=>casePath(p.id)===path);
-  return <><a className="skip-link" href="#main-content">跳到主要内容</a><Header navigate={navigate} isCase={path!=='/'}/>{path==='/'?<main id="main-content" tabIndex={-1}><div id="top"/><Hero/><PhoneStory/><About/><Gallery navigate={navigate}/><MotionSpotlight/><Explorations openPreview={setPreview}/><Contact copy={copy}/></main>:project?<CasePage key={project.id} project={project} navigate={navigate}/>:<NotFound navigate={navigate}/>}<PreviewDialog preview={preview} onClose={()=>setPreview(null)}/>{toast&&<div className="toast" role="status"><Check size={16}/>{toast}</div>}</>;
+  return <><a className="skip-link" href="#main-content">跳到主要内容</a><Header navigate={navigate} isCase={path!=='/'}/>{path==='/'?<main id="main-content" tabIndex={-1}><div id="top"/><Hero/><PhoneStory/><About copy={copy}/><Gallery navigate={navigate}/><MotionSpotlight/><Explorations openPreview={setPreview}/><Contact copy={copy}/></main>:project?<CasePage key={project.id} project={project} navigate={navigate}/>:<NotFound navigate={navigate}/>}<PreviewDialog preview={preview} onClose={()=>setPreview(null)}/>{toast&&<div className="toast" role="status"><Check size={16}/>{toast}</div>}</>;
 }
 
 createRoot(document.getElementById('root')).render(<App/>);

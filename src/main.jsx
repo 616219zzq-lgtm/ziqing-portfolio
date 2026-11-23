@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, RotateCw, Download, Copy, Check, Menu, X, Plus, MapPin, Smartphone, Signal, Battery } from 'lucide-react';
+import { ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, RotateCw, Download, Copy, Check, Menu, X, Plus, MapPin, Smartphone, Signal, Battery } from 'lucide-react';
 import { profile, projects, explorations, media, motionClips, heroMedia, phonePortrait, explorationCovers } from './content';
 import ProfileCard from './components/ProfileCard';
 import ClosingBadge from './components/ClosingBadge';

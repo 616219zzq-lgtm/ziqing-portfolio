@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, RotateCw, Download, Copy, Check, Menu, X, Plus, MapPin, Smartphone, Signal, Battery } from 'lucide-react';
+import { ArrowUpRight, ArrowDown, ArrowLeft, ArrowRight, RotateCw, Download, Copy, Check, Menu, X, Plus, MapPin, Smartphone, Signal, Battery } from 'lucide-react';
 import { profile, projects, explorations, media, motionClips, heroMedia, phonePortrait, explorationCovers } from './content';
 import ProfileCard from './components/ProfileCard';
 import ClosingBadge from './components/ClosingBadge';
@@ -73,9 +73,35 @@ function BackgroundMusic() {
   const [playing, setPlaying] = useState(false);
   const [failed, setFailed] = useState(false);
   const label = playing ? '暂停背景音乐' : '播放背景音乐';
+  const preferenceKey = 'portfolio-bgm';
+
+  useEffect(() => {
+    try { if (localStorage.getItem(preferenceKey) === 'off') return; } catch {}
+    const player = audio.current;
+    player.volume = 0.28;
+    const retry = event => {
+      if (event.target instanceof Element && event.target.closest('.music-control')) return;
+      if (event.type === 'keydown' && (event.repeat || !['Enter', ' '].includes(event.key))) return;
+      start();
+    };
+    const stopListening = () => {
+      window.removeEventListener('click', retry, true);
+      window.removeEventListener('keydown', retry, true);
+      player.removeEventListener('play', stopListening);
+    };
+    const start = () => player.play().catch(error => {
+      if (!['NotAllowedError', 'AbortError'].includes(error.name)) stopListening();
+    });
+    window.addEventListener('click', retry, true);
+    window.addEventListener('keydown', retry, true);
+    player.addEventListener('play', stopListening, { once: true });
+    start();
+    return stopListening;
+  }, []);
 
   const toggleMusic = async () => {
     const player = audio.current;
+    try { localStorage.setItem(preferenceKey, player.paused ? 'on' : 'off'); } catch {}
     if (!player.paused) {
       player.pause();
       return;
@@ -295,68 +321,71 @@ function VideoSlot() {
   return <div className="video-placeholder"><ProjectMedia src={media.flarewild.video} poster={media.flarewild.poster} alt="FlareWild · 互动视频" video/></div>;
 }
 
-function MotionClip({ clip }) {
-  const ref = useRef(null);
+function MotionSpotlight() {
+  const screen = useRef(null);
+  const videos = useRef([]);
   const [nearby, setNearby] = useState(false);
-  const [playing, setPlaying] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [active, setActive] = useState(0);
+  const [shown, setShown] = useState(-1);
+  const [buffering, setBuffering] = useState(false);
   const [failed, setFailed] = useState(false);
+  const next = (active + 1) % motionClips.length;
 
   useEffect(() => {
-    const video = ref.current;
-    if (!video || !('IntersectionObserver' in window)) return;
+    const frame = screen.current;
     const warmup = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
       setNearby(true);
       warmup.disconnect();
     }, { rootMargin: '1300px 0px' });
-    const playback = new IntersectionObserver(([entry]) => {
-      if (entry.intersectionRatio >= .3) {
-        if (!reduceMotion()) video.play().catch(() => {});
-      } else {
-        video.pause();
-      }
-    }, { threshold: .3 });
-    warmup.observe(video);
-    playback.observe(video);
-    return () => {
-      warmup.disconnect();
-      playback.disconnect();
-      video.pause();
-    };
+    const playback = new IntersectionObserver(([entry]) => setVisible(entry.intersectionRatio >= .3), { threshold: .3 });
+    warmup.observe(frame);
+    playback.observe(frame);
+    return () => { warmup.disconnect(); playback.disconnect(); };
   }, []);
 
-  if (!clip.src) return <ProjectPlaceholder label={clip.title} video/>;
-  const play = () => {
-    const video = ref.current;
-    if (failed) {
-      setFailed(false);
-      video.load();
-    }
-    video.play().catch(() => {});
+  useEffect(() => {
+    const video = videos.current[active];
+    if (!visible || !video || reduceMotion()) return;
+    if (video.ended) video.currentTime = 0;
+    if (video.readyState < 3) setBuffering(true);
+    video.play().catch(error => {
+      if (error.name !== 'AbortError') { setBuffering(false); setFailed(true); }
+    });
+    return () => video.pause();
+  }, [active, visible]);
+
+  // Keep the last frame visible until the next video presents its first frame.
+  const reveal = (video, index) => {
+    const show = () => {
+      if (video.paused) return;
+      setShown(index);
+      setBuffering(false);
+    };
+    if (shown !== index && video.requestVideoFrameCallback) video.requestVideoFrameCallback(show);
+    else show();
   };
 
-  return <>
-    <video ref={ref} src={withBase(clip.src)} poster={clip.poster ? withBase(clip.poster) : undefined}
-      controls muted loop playsInline preload={nearby ? 'auto' : 'none'} aria-label={clip.title}
-      onPlaying={() => setPlaying(true)} onPause={() => setPlaying(false)}
-      onError={() => { setPlaying(false); setFailed(true); }}/>
-    {!playing && <button type="button" className="motion-play-button" onClick={play}
-      aria-label={(failed ? '重试播放' : '播放') + clip.title}>{failed ? '重试播放' : '▶'}</button>}
-  </>;
-}
-
-function MotionSpotlight() {
-  const [active,setActive]=useState(0);
-  const gesture=useRef(null);
-  const clips=motionClips.length?motionClips:[{id:'motion-01',title:'道具互动 · 动效 01',src:null}];
-  const select=delta=>setActive(i=>(i+delta+clips.length)%clips.length);
-  const clip={...clips[active],src:clips[active].src||(active===0?media.flarewild.video:null)};
   return <section id="motion" className="motion-section reference-motion" aria-labelledby="motion-title"><div className="motion-heading"><p className="eyebrow">MOTION DESIGN</p><MotionTitle id="motion-title">FlareWild <span className="motion-title-muted">道具互动</span></MotionTitle><p>用道具创造互动，用动效回应参与。<br/>从拾取、使用到反馈，让每一次互动都被感知。</p></div>
-    <div className="motion-device-wrap" role="region" aria-label="FlareWild 动效视频，可用左右方向键切换" tabIndex={0} onKeyDown={e=>{if(e.target!==e.currentTarget)return;if(e.key==='ArrowLeft'){e.preventDefault();select(-1);}if(e.key==='ArrowRight'){e.preventDefault();select(1);}}}>
-      <button className="motion-video-prev icon-button" onClick={()=>select(-1)} disabled={clips.length<2} aria-label="上一个动效视频"><ChevronLeft/></button>
-      <div className="motion-iphone" data-device="iphone-18-pro" aria-label="iPhone 18 风格手机视频模型"><i className="device-volume" aria-hidden="true"/><i className="device-power" aria-hidden="true"/><div className="motion-iphone-screen" onPointerDown={e=>{gesture.current={x:e.clientX,y:e.clientY};}} onPointerUp={e=>{if(!gesture.current)return;const dx=e.clientX-gesture.current.x,dy=e.clientY-gesture.current.y;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.5)select(dx<0?1:-1);gesture.current=null;}} onPointerCancel={()=>{gesture.current=null;}}><div key={clip.id} className="motion-video-slide"><MotionClip clip={clip}/></div><i className="device-home-indicator" aria-hidden="true"/></div></div>
-      <button className="motion-video-next icon-button" onClick={()=>select(1)} disabled={clips.length<2} aria-label="下一个动效视频"><ChevronRight/></button>
-      <div className="motion-video-pagination" aria-live="polite"><span>{String(active+1).padStart(2,'0')} <i>/ {String(clips.length).padStart(2,'0')}</i></span><p>{clip.title}</p></div>
+    <div className="motion-device-wrap" role="region" aria-label="FlareWild 动效视频">
+      <div className="motion-iphone" data-device="iphone-18-pro"><i className="device-volume" aria-hidden="true"/><i className="device-power" aria-hidden="true"/>
+        <div className="motion-iphone-screen" ref={screen}>
+          <div className="motion-video-slide">
+            {motionClips[0]?.poster && <img className="motion-video-poster" src={motionClips[0].poster} alt="" loading="lazy"/>}
+            {motionClips.map((clip, index) => <video key={clip.id} ref={el => { videos.current[index] = el; }}
+              className={shown === index ? 'is-shown' : ''} src={clip.src} muted playsInline disablePictureInPicture
+              preload={nearby && (index === active || index === next) ? 'auto' : 'none'}
+              aria-hidden={shown !== index} aria-label={clip.title}
+              onPlaying={event => { if (active === index) reveal(event.currentTarget, index); }}
+              onWaiting={() => { if (active === index) setBuffering(true); }}
+              onEnded={() => { if (active === index) { setBuffering(false); setActive(next); } }}
+              onError={() => { if (active === index) { setBuffering(false); setFailed(true); } }}/>) }
+          </div>
+          {visible && buffering && !failed && <span className="motion-video-spinner" role="status" aria-label="正在加载视频"/>}
+          <i className="device-home-indicator" aria-hidden="true"/>
+        </div>
+      </div>
     </div><p className="motion-footnote">从互动玩法到视觉反馈，<br/>探索动效如何成为体验的一部分。</p></section>;
 }
 

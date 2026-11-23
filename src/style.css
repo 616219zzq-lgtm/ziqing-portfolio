@@ -717,7 +717,7 @@ html[data-stage-dark] .home-header .nav-resume { color: #111; background: #fff; 
 .reflective-hanging .reflective-card__tile { width: 35px; height: 35px; }
 
 /* Edge-to-edge phone screen for the video sequence. */
-.motion-device-wrap { --mock-width: clamp(276px,20vw,342px); position: relative; width: var(--mock-width); max-width: 100%; margin: 95px auto 0; }
+.motion-device-wrap { --mock-width: clamp(276px,20vw,342px); position: relative; width: calc(var(--mock-width) + 180px); max-width: 100%; margin: 95px auto 0; outline-offset: 12px; }
 .motion-iphone {
   position: relative; width: var(--mock-width); aspect-ratio: 9 / 19.5;
   margin: auto; padding: 7px; border-radius: 48px;
@@ -733,11 +733,23 @@ html[data-stage-dark] .home-header .nav-resume { color: #111; background: #fff; 
 .motion-video-slide :is(video, .motion-video-poster) { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
 .motion-video-slide video { opacity: 0; pointer-events: none; }
 .motion-video-slide video.is-shown { opacity: 1; }
+.motion-device-wrap > .icon-button { position: absolute; top: 45%; width: 46px; height: 46px; border: 1px solid #ffffff40; background: #141416; color: #e8e8ed; z-index: 3; transition: background .25s, transform .35s; }
+.motion-device-wrap > .icon-button:hover { background: #333337; transform: scale(1.08); }
+.motion-video-prev { left: 0; }
+.motion-video-next { right: 0; }
+.motion-video-pagination { min-height: 44px; margin-top: 24px; text-align: center; }
+.motion-video-pagination > span { font: 12px var(--mono); color: #eeeef0; }
+.motion-video-pagination i { color: #73737a; font-style: normal; }
+.motion-video-pagination p { color: #a1a1a6; font-size: 12px; margin: 8px 0 0; }
 .motion-video-spinner { position: absolute; top: 50%; left: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px; border: 2px solid #ffffff55; border-top-color: #fff; border-radius: 50%; filter: drop-shadow(0 1px 2px #0008); opacity: 0; pointer-events: none; animation: motion-spinner-in .15s linear .25s forwards, motion-spinner-spin .75s linear infinite; }
 @keyframes motion-spinner-in { to { opacity: 1; } }
 @keyframes motion-spinner-spin { to { transform: rotate(360deg); } }
 @media (max-width: 700px) {
   .motion-device-wrap { --mock-width: min(65vw,310px); width: 100%; margin-top: 70px; }
+  .motion-device-wrap > .icon-button { width: 36px; height: 36px; }
+  .motion-video-prev { left: max(0px, calc((100% - var(--mock-width)) / 2 - 42px)); }
+  .motion-video-next { right: max(0px, calc((100% - var(--mock-width)) / 2 - 42px)); }
+  .motion-video-pagination { margin-top: 20px; }
   .motion-iphone { padding: 5px; border-radius: 39px; }
   .motion-iphone-screen { border-radius: 34px; }
   .reflective-hanging .reflective-card__header { font-size: 9px; }

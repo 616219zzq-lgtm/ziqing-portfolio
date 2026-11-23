@@ -331,6 +331,10 @@ function MotionSpotlight() {
   const [buffering, setBuffering] = useState(false);
   const [failed, setFailed] = useState(false);
   const next = (active + 1) % motionClips.length;
+  const select = delta => {
+    setFailed(false);
+    setActive(index => (index + delta + motionClips.length) % motionClips.length);
+  };
 
   useEffect(() => {
     const frame = screen.current;
@@ -368,7 +372,8 @@ function MotionSpotlight() {
   };
 
   return <section id="motion" className="motion-section reference-motion" aria-labelledby="motion-title"><div className="motion-heading"><p className="eyebrow">MOTION DESIGN</p><MotionTitle id="motion-title">FlareWild <span className="motion-title-muted">道具互动</span></MotionTitle><p>用道具创造互动，用动效回应参与。<br/>从拾取、使用到反馈，让每一次互动都被感知。</p></div>
-    <div className="motion-device-wrap" role="region" aria-label="FlareWild 动效视频">
+    <div className="motion-device-wrap" role="region" aria-label="FlareWild 动效视频，可用左右方向键切换" tabIndex={0} onKeyDown={event => { if (event.key === 'ArrowLeft') { event.preventDefault(); select(-1); } if (event.key === 'ArrowRight') { event.preventDefault(); select(1); } }}>
+      <button type="button" className="motion-video-prev icon-button" onClick={() => select(-1)} aria-label="上一个动效视频"><ChevronLeft/></button>
       <div className="motion-iphone" data-device="iphone-18-pro"><i className="device-volume" aria-hidden="true"/><i className="device-power" aria-hidden="true"/>
         <div className="motion-iphone-screen" ref={screen}>
           <div className="motion-video-slide">
@@ -386,6 +391,8 @@ function MotionSpotlight() {
           <i className="device-home-indicator" aria-hidden="true"/>
         </div>
       </div>
+      <button type="button" className="motion-video-next icon-button" onClick={() => select(1)} aria-label="下一个动效视频"><ChevronRight/></button>
+      <div className="motion-video-pagination" aria-live="polite"><span>{String(active + 1).padStart(2, '0')} <i>/ {String(motionClips.length).padStart(2, '0')}</i></span><p>{motionClips[active]?.title}</p></div>
     </div><p className="motion-footnote">从互动玩法到视觉反馈，<br/>探索动效如何成为体验的一部分。</p></section>;
 }
 

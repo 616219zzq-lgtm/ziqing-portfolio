@@ -235,7 +235,7 @@ main:focus { outline: none; }
 .case-facts span { font: 8px var(--mono); color: #aaaab0; letter-spacing: 1px; }
 .case-facts strong { font-weight: 400; font-size: 12px; }
 .case-banner { height: 470px; background: #e5e5e5; position: relative; margin: 0 30px; border-radius: 18px; overflow: hidden; }
-.case-body { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 75px; align-items: start; padding-top: 95px; padding-bottom: 40px; }
+.case-body { --case-shell-width: min(1420px, calc(100% - 100px)); display: grid; width: var(--case-shell-width); max-width: none; grid-template-columns: 190px minmax(0, 1fr); gap: clamp(48px, 5vw, 82px); align-items: start; padding-top: 95px; padding-bottom: 40px; margin-inline: auto; }
 .case-sidebar { position: sticky; top: 35px; display: flex; flex-direction: column; gap: 14px; padding-top: 10px; }
 .case-sidebar > .tiny-code { color: #a5a5ab; font-size: 9px; margin-bottom: 14px; }
 .case-sidebar > a { display: flex; align-items: flex-start; gap: 12px; font-size: 10px; color: #83838c; line-height: 1.8; padding: 6px 0; }
@@ -282,7 +282,7 @@ main:focus { outline: none; }
   .video-placeholder { height: 350px; }
   .about-section { gap: 5%; }
   .about-intro .eyebrow { letter-spacing: .7px; font-size: 8px; }
-  .case-body { grid-template-columns: 170px minmax(0, 1fr); gap: 45px; }
+  .case-body { --case-shell-width: calc(100% - 70px); grid-template-columns: 155px minmax(0, 1fr); gap: 36px; }
 }
 @media (max-width: 700px) {
   html { scroll-padding-top: 25px; }
@@ -367,7 +367,7 @@ main:focus { outline: none; }
   .case-facts > div:last-child { grid-column: 1 / -1; }
   .case-facts strong { font-size: 11px; }
   .case-banner { height: 290px; margin: 0 14px; border-radius: 12px; }
-  .case-body { display: block; padding-top: 45px; padding-bottom: 20px; }
+  .case-body { display: block; width: calc(100% - 44px); padding-top: 45px; padding-bottom: 20px; }
   .case-sidebar { position: static; flex-flow: row wrap; gap: 4px 15px; padding: 0 0 25px; margin-bottom: 30px; border-bottom: 1px solid var(--line); }
   .case-sidebar > .tiny-code { width: 100%; margin-bottom: 7px; }
   .case-sidebar > a { font-size: 9px; gap: 6px; }
